@@ -1,35 +1,34 @@
 /**
  * EndingView.tsx
- * Level 7 "Exam Day & Beyond" Finale.
- * Highlights the core message: "You are more than your grades",
- * provides reflection takeaways from content.ts, and direct access to Singapore Helplines.
+ * Level 7 "Standing Tall" Finale.
+ * Highlights the core message: "Real strength is standing your ground",
+ * provides reflection takeaways, and allows replaying Chapter 1.
+ * (No unverified facts, statistics, or phone numbers).
  */
 
 import React from 'react';
-import { LevelConfig, SINGAPORE_HELPLINES } from '../content';
-import { Trophy, CheckCircle, Heart, Phone, ArrowLeft, RotateCcw, ExternalLink } from 'lucide-react';
+import { LevelConfig } from '../content';
+import { Trophy, CheckCircle, ArrowLeft, RotateCcw } from 'lucide-react';
 import { sound } from '../audio';
 
 interface EndingViewProps {
   level: LevelConfig;
   onRestartJourney: () => void;
   onExitToMap: () => void;
-  onOpenHelplines: () => void;
 }
 
 export const EndingView: React.FC<EndingViewProps> = ({
   level,
   onRestartJourney,
   onExitToMap,
-  onOpenHelplines,
 }) => {
   const endingData = level.endingSummary || {
-    headline: 'You Completed Chapter 1: Exam Week!',
+    headline: 'You Completed Chapter 1: Standing Your Ground!',
     takeaways: [
-      'Your worth is never defined by a letter on an exam slip.',
-      'Sleep and scheduled rest consolidate your memories—they are active study tools.',
-      'Reaching out for peer or professional support is a strength, never a weakness.',
-      'Singapore helplines like SOS (1767) and YouthLine (1771) are always here for you.',
+      'Real friends respect your boundaries and your choices.',
+      'You never have to inhale or try anything just to fit into a group.',
+      'Common myths like "it is just water vapour" hide real risks and addictive substances.',
+      'Standing your ground takes real courage—and you have that courage inside you.',
     ],
   };
 
@@ -62,21 +61,21 @@ export const EndingView: React.FC<EndingViewProps> = ({
         </div>
 
         <span className="text-xs font-black uppercase tracking-widest text-amber-400 block mb-1">
-          Certificate of Resilient Focus
+          Certificate of Standing Your Ground
         </span>
         <h1 className="text-2xl sm:text-3xl font-black text-white font-['Fredoka',sans-serif] mb-3">
           {endingData.headline}
         </h1>
 
         <p className="text-sm text-slate-300 max-w-lg mx-auto mb-6 leading-relaxed">
-          Rin stepped into the examination hall not with paralyzing dread, but with deep breaths, clear focus, and the knowledge that true friendship and self-worth outlast any exam paper.
+          Rin and Jay walked out into the open courtyard with clarity and confidence. True friendship means supporting one another in making healthy choices and standing up against peer pressure.
         </p>
 
         {/* Essential Takeaways List */}
         <div className="bg-slate-950/80 border border-slate-800 rounded-2xl p-5 mb-6 text-left max-w-xl mx-auto">
           <h2 className="text-xs font-black uppercase tracking-wider text-slate-400 mb-3 flex items-center gap-1.5">
             <CheckCircle className="w-4 h-4 text-emerald-400" />
-            <span>Key Lessons for Singapore Students:</span>
+            <span>Key Takeaways:</span>
           </h2>
           <ul className="space-y-2.5">
             {endingData.takeaways.map((takeaway, idx) => (
@@ -86,26 +85,6 @@ export const EndingView: React.FC<EndingViewProps> = ({
               </li>
             ))}
           </ul>
-        </div>
-
-        {/* Quick Helplines Callout Box */}
-        <div className="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-4 mb-6 max-w-xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-left">
-          <div>
-            <span className="text-xs font-bold text-rose-400 flex items-center gap-1 mb-0.5">
-              <Heart className="w-3.5 h-3.5 fill-rose-500" />
-              <span>Singapore 24/7 Youth Support:</span>
-            </span>
-            <p className="text-xs text-slate-300">
-              Samaritans of Singapore (SOS): <strong>1767</strong> | YouthLine: <strong>1771</strong>
-            </p>
-          </div>
-          <button
-            id="btn-ending-view-helplines"
-            onClick={onOpenHelplines}
-            className="px-3.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-xl text-xs font-bold transition-colors cursor-pointer shrink-0"
-          >
-            All Resources
-          </button>
         </div>
 
         {/* Action Buttons */}

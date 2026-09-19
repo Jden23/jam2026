@@ -219,13 +219,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       enemiesRef.current = [];
       setTargetsRemaining(3);
     } else if (level.id === 3) {
-      // Level 3: Classroom Chaos (12 enemies: doubt sprites & procrastination motes)
+      // Level 3: Vapour Mist Sprites
       practiceTargetsRef.current = [];
       enemiesRef.current = [];
       for (let i = 0; i < 8; i++) {
         enemiesRef.current.push({
           id: `sprite-${i}`,
-          name: 'Doubt Sprite',
+          name: 'Vapour Sprite',
           type: 'doubt-sprite',
           x: 180 + Math.random() * 480,
           y: 120 + Math.random() * 240,
@@ -244,12 +244,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       }
       setTargetsRemaining(8);
     } else if (level.id === 5) {
-      // Level 5: Library Showdown (Boss: Burnout Beast)
+      // Level 5: Courtyard Showdown (Boss: Pressure Golem)
       practiceTargetsRef.current = [];
       enemiesRef.current = [
         {
           id: 'burnout-boss',
-          name: 'Burnout Beast',
+          name: 'Pressure Golem',
           type: 'burnout-boss',
           x: 400,
           y: 200,
@@ -1084,7 +1084,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
               {/* Quick Tip Box */}
               <div className="bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 mb-6 text-left">
                 <span className="text-xs font-bold text-amber-400 uppercase tracking-wider block mb-1">
-                  💡 Study & Combat Tip:
+                  💡 Combat Tip:
                 </span>
                 <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-medium">
                   {currentTip || QUICK_TIPS[0]}

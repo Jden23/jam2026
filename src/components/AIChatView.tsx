@@ -1,18 +1,18 @@
 /**
  * AIChatView.tsx
- * Level 4 "Study Buddy AI" interactive chat component.
- * Connected to /api/chat with Gemini 3.8 Flash, with instant fallback
- * to content.ts verified facts and coping strategies.
+ * Level 6 "Safe Space Chat" interactive chat component.
+ * Discussion on peer pressure, refusal skills, and vape/drug myths.
+ * (Study mentor persona completely removed).
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { LevelConfig, AI_CHAT_PROMPTS, AI_CHAT_FALLBACKS } from '../content';
-import { ArrowLeft, Send, Sparkles, Bot, User, Check, RefreshCw } from 'lucide-react';
+import { LevelConfig, AI_CHAT_PROMPTS } from '../content';
+import { ArrowLeft, Send, Sparkles, MessageCircle, User, Check, RefreshCw } from 'lucide-react';
 import { sound } from '../audio';
 
 interface Message {
   id: string;
-  sender: 'user' | 'buddy';
+  sender: 'user' | 'assistant';
   text: string;
   time: string;
 }
@@ -31,8 +31,8 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 'm-1',
-      sender: 'buddy',
-      text: "Hello Rin! I'm your digital Study Buddy. Exam week can feel daunting, but you don't have to carry it all in your head. What's on your mind today?",
+      sender: 'assistant',
+      text: "Hey Rin! This is an open, judgment-free space to talk through peer pressure, practice how to say no, or discuss myths about vapes and drugs. What's on your mind?",
       time: 'Just now',
     },
   ]);
@@ -66,7 +66,6 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
     setIsLoading(true);
 
     try {
-      // Call full-stack server endpoint
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -77,44 +76,26 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
       });
 
       const data = await res.json();
-
-      let replyText = data?.reply;
-
-      // Fallback matching from content.ts if server has no key or offline
-      if (!replyText || data?.fallback) {
-        const lower = query.toLowerCase();
-        if (lower.includes('breath') || lower.includes('calm') || lower.includes('panic')) {
-          replyText = AI_CHAT_FALLBACKS.breathing;
-        } else if (lower.includes('helpline') || lower.includes('contact') || lower.includes('support') || lower.includes('talk')) {
-          replyText = AI_CHAT_FALLBACKS.helplines;
-        } else if (lower.includes('parent') || lower.includes('family') || lower.includes('pressure') || lower.includes('expect')) {
-          replyText = AI_CHAT_FALLBACKS.pressure;
-        } else if (lower.includes('overwhelm') || lower.includes('mountain') || lower.includes('start') || lower.includes('too much')) {
-          replyText = AI_CHAT_FALLBACKS.overwhelmed;
-        } else if (lower.includes('night') || lower.includes('sleep') || lower.includes('think') || lower.includes('worry')) {
-          replyText = AI_CHAT_FALLBACKS.overthinking;
-        } else {
-          replyText = AI_CHAT_FALLBACKS.default;
-        }
-      }
+      const replyText =
+        data?.reply ||
+        "Standing your ground takes real courage. Remember: real friends will always respect your choices and boundaries.";
 
       setMessages((prev) => [
         ...prev,
         {
-          id: `buddy-${Date.now()}`,
-          sender: 'buddy',
+          id: `asst-${Date.now()}`,
+          sender: 'assistant',
           text: replyText,
           time: 'Just now',
         },
       ]);
     } catch {
-      // Offline fallback
       setMessages((prev) => [
         ...prev,
         {
-          id: `buddy-${Date.now()}`,
-          sender: 'buddy',
-          text: AI_CHAT_FALLBACKS.default,
+          id: `asst-${Date.now()}`,
+          sender: 'assistant',
+          text: "When facing peer pressure, keeping your response simple like 'No thanks, not my thing' is often the most effective. Real friends respect your boundaries.",
           time: 'Just now',
         },
       ]);
@@ -157,13 +138,15 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
         <div className="px-5 py-3.5 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-full bg-sky-500/20 text-sky-400 border border-sky-500/40 flex items-center justify-center">
-              <Bot className="w-4 h-4" />
+              <MessageCircle className="w-4 h-4" />
             </div>
             <div>
-              <h2 className="text-sm font-black text-white font-['Fredoka',sans-serif]">Study Buddy AI</h2>
+              <h2 className="text-sm font-black text-white font-['Fredoka',sans-serif]">
+                Safe Space Chat
+              </h2>
               <span className="text-[11px] text-emerald-400 flex items-center gap-1">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span>Online & Ready to support</span>
+                <span>Confidential & Non-judgmental</span>
               </span>
             </div>
           </div>
@@ -181,7 +164,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
               >
                 {!isUser && (
                   <div className="w-7 h-7 rounded-full bg-sky-600/30 border border-sky-500/40 text-sky-300 flex items-center justify-center text-xs shrink-0">
-                    <Bot className="w-3.5 h-3.5" />
+                    <MessageCircle className="w-3.5 h-3.5" />
                   </div>
                 )}
 
@@ -207,7 +190,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
           {isLoading && (
             <div className="flex gap-2 items-center text-xs text-slate-400 italic">
               <RefreshCw className="w-3.5 h-3.5 animate-spin text-sky-400" />
-              <span>Buddy AI is reflecting on your thoughts...</span>
+              <span>Thinking...</span>
             </div>
           )}
 
@@ -245,7 +228,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
             type="text"
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            placeholder="Ask about study techniques, managing stress, or Singapore helplines..."
+            placeholder="Ask about dealing with peer pressure, saying no, or common myths..."
             className="flex-1 bg-slate-800/80 border border-slate-700 rounded-xl px-3.5 py-2 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-sky-500"
           />
           <button

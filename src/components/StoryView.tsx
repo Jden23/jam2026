@@ -1,13 +1,13 @@
 /**
  * StoryView.tsx
- * Visual story dialogue scene for Level 2 (Canteen Whispers) and Level 6 (Evening Reflections).
- * Features cute, rounded characters drawn only with code, expressive dialogue cards,
- * and seamless progression to map or next level.
+ * Visual story dialogue scene for Level 2 (Behind the Bleachers) and Level 4 (The Walk Home).
+ * Features cute, rounded characters drawn only with code (Rin and Jay),
+ * expressive dialogue cards, and seamless progression to map or next level.
  */
 
 import React, { useState } from 'react';
 import { LevelConfig, DialogueLine } from '../content';
-import { ArrowLeft, Play, Sparkles, User, Heart } from 'lucide-react';
+import { ArrowLeft, Play, Sparkles, User } from 'lucide-react';
 import { sound } from '../audio';
 
 interface StoryViewProps {
@@ -80,7 +80,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
           <span>{level.location}</span>
         </div>
 
-        {/* Chibi Character Display (Code-drawn avatars) */}
+        {/* Chibi Character Display (Code-drawn avatars: Rin & Jay) */}
         <div className="relative z-10 flex items-end justify-around w-full px-6 mb-2">
           {/* Rin Avatar */}
           <div
@@ -90,7 +90,6 @@ export const StoryView: React.FC<StoryViewProps> = ({
                 : 'opacity-50 scale-95'
             }`}
           >
-            {/* Cute code-rendered Rin portrait */}
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-b from-blue-900 to-slate-900 border-2 border-sky-400 p-2 flex flex-col items-center justify-center relative shadow-lg">
               {/* Head */}
               <div className="w-12 h-10 rounded-xl bg-orange-200 border border-orange-300 relative flex items-center justify-center">
@@ -115,15 +114,14 @@ export const StoryView: React.FC<StoryViewProps> = ({
             </span>
           </div>
 
-          {/* Kai Avatar (Study Companion) */}
+          {/* Jay Avatar (Friend) */}
           <div
             className={`flex flex-col items-center transition-all duration-300 ${
-              currentLine.speaker === 'Kai'
+              currentLine.speaker === 'Jay'
                 ? 'scale-110 drop-shadow-[0_0_15px_rgba(251,191,36,0.4)]'
                 : 'opacity-50 scale-95'
             }`}
           >
-            {/* Cute code-rendered Kai portrait */}
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-b from-amber-950 to-slate-900 border-2 border-amber-400 p-2 flex flex-col items-center justify-center relative shadow-lg">
               {/* Head with glasses */}
               <div className="w-12 h-10 rounded-xl bg-amber-100 border border-amber-200 relative flex items-center justify-center">
@@ -141,7 +139,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
               </div>
             </div>
             <span className="mt-2 text-xs font-black text-amber-300 bg-slate-900/90 px-2.5 py-0.5 rounded-full border border-amber-500/30">
-              Kai
+              Jay
             </span>
           </div>
         </div>

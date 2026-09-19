@@ -21,7 +21,7 @@ async function startServer() {
     res.json({ status: "ok", game: "Buddy Up" });
   });
 
-  // Server-side Gemini API endpoint for AI Study Buddy
+  // Server-side Gemini API endpoint for Drug Prevention & Peer Pressure Chat
   app.post("/api/chat", async (req, res) => {
     try {
       const { message, history } = req.body;
@@ -29,9 +29,8 @@ async function startServer() {
 
       if (!apiKey) {
         return res.status(200).json({
-          reply: null,
+          reply: "I'm here to talk through any peer pressure or questions about vapes and staying drug-free. Saying 'no' can feel tough in the moment, but standing your ground and staying healthy is something you can always be proud of.",
           fallback: true,
-          notice: "Using local knowledge base",
         });
       }
 
@@ -44,13 +43,15 @@ async function startServer() {
         },
       });
 
-      const systemInstruction = `You are "Buddy AI", a warm, empathetic, and encouraging peer study mentor in the game "Buddy Up" for Singapore secondary school and junior college teens (ages 13–18).
-Key guidelines:
-1. Speak in a friendly, conversational, and uplifting tone accessible to Singapore students (e.g. relatable references to exam revision, taking breaks, staying hydrated, getting enough sleep).
-2. Never shame or criticize the student for feeling anxious, tired, or struggling to focus. Validate their feelings.
-3. Keep responses concise (2 to 4 sentences maximum) so it feels like a snappy in-game dialogue rather than a textbook lecture.
-4. Ground your advice in real study science: active recall, spaced repetition, the 20-20-20 rule, and getting 7-9 hours of sleep to consolidate memories.
-5. If the user mentions extreme distress, self-harm, or feeling hopeless, gently remind them that they are worthy and not alone, and mention real Singapore support lines: Samaritans of Singapore (SOS) 1767 / WhatsApp 9151 1767, YouthLine 1771, or CHAT at 6493 6500.`;
+      const systemInstruction = `You are a supportive, non-judgmental conversational guide in the web game "Buddy Up" for Singapore teens (ages 13–18).
+The core focus is drug prevention, vaping awareness, handling peer pressure, and dispelling common myths.
+Key rules:
+1. DO NOT invent or quote specific numerical statistics, percentages, or phone numbers.
+2. Maintain a friendly, non-preachy, supportive tone that speaks to teenagers as equals.
+3. Help teens practice refusal skills (how to say "no thanks, not my thing", how to walk away without feeling uncool).
+4. Address common myths (e.g., that vapes are "harmless flavoured water vapour", or that "everyone is doing it") with simple, clear logic: vapes contain harmful chemicals and addictive nicotine designed to get users hooked.
+5. Emphasize that real friends always respect your choices and boundaries.
+6. Keep replies concise (2 to 4 sentences) so they read naturally in an in-game dialogue box.`;
 
       const contents: Array<{ role: string; parts: Array<{ text: string }> }> = [];
 
@@ -65,7 +66,7 @@ Key guidelines:
 
       contents.push({
         role: "user",
-        parts: [{ text: message || "Hi buddy!" }],
+        parts: [{ text: message || "Hello" }],
       });
 
       const response = await ai.models.generateContent({
@@ -77,14 +78,13 @@ Key guidelines:
         },
       });
 
-      const replyText = response.text || "I'm right here with you, Rin. Take a deep breath—you've got this!";
+      const replyText = response.text || "Standing your ground when facing peer pressure takes real courage. Real friends will always respect your decision.";
       res.json({ reply: replyText, fallback: false });
     } catch (err: any) {
       console.warn("Gemini API call returned error, falling back:", err?.message || err);
       res.status(200).json({
-        reply: null,
+        reply: "Standing your ground when facing peer pressure takes real courage. Real friends will always respect your decision.",
         fallback: true,
-        error: err?.message,
       });
     }
   });

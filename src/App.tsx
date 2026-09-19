@@ -151,14 +151,14 @@ export default function App() {
               )}
             </button>
 
-            {/* Singapore Helplines & Mental Health Resource Button */}
+            {/* Support and Resource Button */}
             <button
               id="btn-open-helplines-header"
               onClick={() => setShowHelplines(true)}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900/80 text-rose-300 border border-rose-500/40 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
               <Heart className="w-3.5 h-3.5 fill-rose-500" />
-              <span>🇸🇬 Helplines & Facts</span>
+              <span>Support Info</span>
             </button>
           </div>
         </div>
@@ -205,7 +205,6 @@ export default function App() {
             level={activeLevel}
             onRestartJourney={handleRestartJourney}
             onExitToMap={() => setActiveLevel(null)}
-            onOpenHelplines={() => setShowHelplines(true)}
           />
         )}
       </main>

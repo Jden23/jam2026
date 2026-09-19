@@ -54,13 +54,13 @@ export const LevelMap: React.FC<LevelMapProps> = ({
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-950/60 border border-sky-500/40 rounded-full text-xs font-bold text-sky-300 mb-2">
           <Sparkles className="w-3.5 h-3.5" />
-          <span>Chapter 1: Exam Week</span>
+          <span>Chapter 1: Standing Your Ground</span>
         </div>
         <h1 className="text-3xl sm:text-4xl font-black text-white tracking-tight font-['Fredoka',sans-serif]">
           Level Map
         </h1>
         <p className="text-sm text-slate-400 mt-1 max-w-md mx-auto">
-          Follow Rin's path through the school week. Overcome doubts, chat with your buddy, and face exam day with calm confidence.
+          Follow Rin and Jay as they navigate peer pressure, debunk vape myths, and learn that real strength is choosing what is right for yourself.
         </p>
       </div>
 
@@ -181,21 +181,14 @@ export const LevelMap: React.FC<LevelMapProps> = ({
         </div>
       </div>
 
-      {/* Footer Banner with Support Helplines Callout */}
+      {/* Footer Banner */}
       <div className="w-full max-w-xl mt-6 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <div>
-          <h2 className="text-sm font-black text-white">Need someone to talk to right now?</h2>
+          <h2 className="text-sm font-black text-white">Need someone to talk to about peer pressure?</h2>
           <p className="text-xs text-slate-400">
-            Real, confidential Singapore support helplines (SOS 1767, YouthLine 1771, CHAT).
+            Remember that true friends will always respect your choices and boundaries.
           </p>
         </div>
-        <button
-          id="btn-open-helplines-map"
-          onClick={onOpenHelplines}
-          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-xl text-xs font-bold transition-colors cursor-pointer shrink-0"
-        >
-          View Helplines
-        </button>
       </div>
     </div>
   );

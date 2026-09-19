@@ -45,7 +45,7 @@ export interface PracticeTarget {
 export interface EnemyEntity {
   id: string;
   name: string;
-  type: 'doubt-sprite' | 'procrastination-mote' | 'burnout-boss';
+  type: 'doubt-sprite' | 'procrastination-mote' | 'burnout-boss' | 'vapour-sprite' | 'pressure-mote' | 'smoke-golem';
   x: number;
   y: number;
   vx: number;

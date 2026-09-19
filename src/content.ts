@@ -1,41 +1,13 @@
 /**
  * content.ts
- * ALL game text, story scripts, verified real-world facts, card names,
- * tips, and Singapore youth helplines are centralized in this file for easy editing.
- * No facts are invented.
+ * Centralized game text, story scripts, level configurations, and combat tips.
+ * Theme: Drug prevention for teens (vapes, peer pressure, myths).
+ * NOTE: As instructed, no unverified facts, statistics, or phone numbers are added.
  */
-
-export interface Helpline {
-  name: string;
-  tagline: string;
-  phone: string;
-  contactDetail: string;
-  availableHours: string;
-  website: string;
-  description: string;
-  isFree: boolean;
-}
-
-export interface WellnessFact {
-  id: string;
-  title: string;
-  category: 'Brain Science' | 'Study Method' | 'Mental Health' | 'Habits';
-  summary: string;
-  fact: string;
-  source: string;
-}
-
-export interface WellnessCard {
-  id: string;
-  name: string;
-  icon: string;
-  bonus: string;
-  quote: string;
-}
 
 export interface DialogueLine {
   speaker: string;
-  avatar: 'rin' | 'kai' | 'buddy' | 'teacher' | 'narrator';
+  avatar: 'rin' | 'jay' | 'narrator';
   text: string;
   mood?: 'neutral' | 'worried' | 'happy' | 'determined' | 'calm';
 }
@@ -60,12 +32,11 @@ export interface LevelConfig {
 
 export const APP_INFO = {
   title: "Buddy Up",
-  tagline: "Chapter 1: Exam Week",
+  tagline: "Chapter 1: Standing Your Ground",
   audience: "Singapore Teens (Ages 13–18)",
   characterName: "Rin",
-  characterDescription: "A round, blocky student wearing their trusty school uniform and backpack.",
-  companionName: "Kai",
-  aiCompanionName: "Buddy AI",
+  characterDescription: "A round, blocky student wearing their school uniform and backpack.",
+  companionName: "Jay",
 };
 
 export const CONTROLS_TEXT = {
@@ -88,172 +59,28 @@ export const CONTROLS_TEXT = {
   },
 };
 
+/**
+ * Combat-only tips (all study tips removed as instructed)
+ */
 export const QUICK_TIPS = [
-  "Keep moving! Strafing in gentle circles makes it much easier to dodge incoming stress motes.",
-  "Your Dash gives you momentary invulnerability to phase through projectiles safely.",
-  "Dash has a 1-second cooldown. Watch the glowing recharge ring around Rin before dashing again.",
-  "Active recall and spaced revision beat all-night cramming every single time.",
+  "Keep moving! Strafing in gentle circles makes it much easier to dodge incoming projectiles.",
+  "Your Dash gives you momentary invulnerability to phase through obstacles safely.",
+  "Dash has a 1-second cooldown. Watch the recharge ring before dashing again.",
   "Losing a fight is just practice! In Buddy Up, defeat never changes your story progress.",
-  "Take 20 seconds to look 20 feet away every 20 minutes to reset your focus and eye strain.",
-  "If exam stress feels too heavy, chatting with someone who understands makes a world of difference.",
+  "Stay at mid-range to give yourself plenty of time to react to incoming attacks.",
+  "When swarmed, focus on clearing the closest enemies first to create breathing room.",
 ];
 
 /**
- * 100% Real Singapore Youth Mental Health & Support Helplines
- * (Samaritans of Singapore, CHAT, YouthLine, Tinkle Friend, TOUCHline, Care Corner, Mindline)
- */
-export const SINGAPORE_HELPLINES: Helpline[] = [
-  {
-    name: "SOS (Samaritans of Singapore)",
-    tagline: "24-Hour Confidential Suicide Prevention & Crisis Support",
-    phone: "1767",
-    contactDetail: "Call 1767 (24/7) or WhatsApp 9151 1767 (24/7)",
-    availableHours: "24 hours daily",
-    website: "https://www.sos.org.sg",
-    description: "Trained counsellors providing a non-judgmental safe space for anyone facing overwhelming distress, emotional pain, or crisis.",
-    isFree: true,
-  },
-  {
-    name: "CHAT (Centre of Excellence for Youth Mental Health)",
-    tagline: "Youth Mental Health Assessment & Triage for Ages 16–30",
-    phone: "6493 6500",
-    contactDetail: "Tel: 6493 6500 / 6493 6501 or Web Chat at mentalhealth.sg",
-    availableHours: "Tuesdays to Saturdays, 12:00 PM – 9:00 PM",
-    website: "https://www.chat.mentalhealth.sg",
-    description: "Initiative by the Institute of Mental Health (IMH) offering free, confidential, in-person and digital mental health assessments for youth.",
-    isFree: true,
-  },
-  {
-    name: "YouthLine Singapore",
-    tagline: "Dedicated Listening Ear & Counselling for Youths",
-    phone: "1771",
-    contactDetail: "Call 1771 or WhatsApp +65 8533 1333",
-    availableHours: "Every day, 9:00 AM – 12:00 Midnight",
-    website: "https://youthline.sg",
-    description: "Free and confidential helpline and text-based counselling tailored for youths navigating academic stress, family, relationships, or anxiety.",
-    isFree: true,
-  },
-  {
-    name: "Tinkle Friend (Singapore Children's Society)",
-    tagline: "Helpline & Chat for Lower Secondary & Primary Students",
-    phone: "1800 2744 788",
-    contactDetail: "Helpline: 1800 2744 788 or Online Chat at tinklefriend.sg",
-    availableHours: "Mon–Fri 2:30 PM – 5:00 PM (Helpline) & 2:30 PM – 7:00 PM (Chat)",
-    website: "https://www.tinklefriend.sg",
-    description: "A supportive, comforting presence for younger teens and students when feeling lonely, anxious, or distressed after school.",
-    isFree: true,
-  },
-  {
-    name: "TOUCHline (TOUCH Community Services)",
-    tagline: "Youth Counselling & Cyber-Wellness Helpline",
-    phone: "1800 377 2252",
-    contactDetail: "Call 1800 377 2252",
-    availableHours: "Mondays to Fridays, 9:00 AM – 6:00 PM",
-    website: "https://www.touch.org.sg",
-    description: "Experienced youth workers providing guidance for academic pressure, gaming habits, emotional struggles, and peer challenges.",
-    isFree: true,
-  },
-  {
-    name: "Mindline.sg",
-    tagline: "Singapore National Youth Digital Wellness Platform",
-    phone: "Online",
-    contactDetail: "Visit mindline.sg / mindline.sg/youth",
-    availableHours: "24/7 Digital Self-Care & Chat Tools",
-    website: "https://www.mindline.sg",
-    description: "Interactive tools by MOH Office for Healthcare Transformation (MOHT), featuring clinically validated self-assessments, stress tools, and resources.",
-    isFree: true,
-  },
-];
-
-/**
- * Real, evidence-based cognitive science and mental health facts for students.
- */
-export const WELLNESS_FACTS: WellnessFact[] = [
-  {
-    id: "sleep-memory",
-    title: "Sleep Consolidates Memory",
-    category: "Brain Science",
-    summary: "Sleeping 7–9 hours cements what you studied into long-term memory.",
-    fact: "During Slow-Wave and REM sleep, the hippocampus replays study memories and transfers them to the neocortex. Research shows an all-nighter can slash information retention by up to 40% compared to sleeping well.",
-    source: "Harvard Medical School Division of Sleep Medicine & Nature Neuroscience",
-  },
-  {
-    id: "spaced-repetition",
-    title: "The Spacing Effect beats Cramming",
-    category: "Study Method",
-    summary: "Revisiting topics across several days permanently strengthens recall.",
-    fact: "According to Ebbinghaus's forgetting curve, humans forget roughly 70% of newly learned facts within 48 hours unless revisited. Reviewing notes at spaced intervals (1 day, 3 days, 1 week) builds durable recall with less total study hours.",
-    source: "Journal of Experimental Psychology & Cognitive Science Society",
-  },
-  {
-    id: "box-breathing",
-    title: "Box Breathing Calms the Vagus Nerve",
-    category: "Mental Health",
-    summary: "4 seconds in, 4 seconds hold, 4 seconds out, 4 seconds hold.",
-    fact: "Equal-count rhythmic breathing directly stimulates the vagus nerve and activates the parasympathetic nervous system, lowering heart rate and rapidly reducing acute pre-exam cortisol surges.",
-    source: "National Institutes of Health (NIH) & Stanford Medicine",
-  },
-  {
-    id: "active-recall",
-    title: "Testing Yourself Outperforms Rereading",
-    category: "Study Method",
-    summary: "Flashcards and practice questions trigger stronger neural pathways.",
-    fact: "Passive rereading and highlighting create an 'illusion of competence'. Active retrieval practice forces the brain to reconstruct memory traces, dramatically boosting exam-day recall under time pressure.",
-    source: "Psychological Science in the Public Interest (Dunlosky et al.)",
-  },
-  {
-    id: "20-20-20-rule",
-    title: "The 20-20-20 Eye & Mind Break",
-    category: "Habits",
-    summary: "Every 20 mins, look 20 feet away for 20 seconds.",
-    fact: "Staring continuously at study tablets or textbooks fatigues the ciliary muscles in your eyes and raises cognitive fatigue. Looking into the distance relaxes the optic system and resets attention spans.",
-    source: "American Academy of Ophthalmology (AAO)",
-  },
-];
-
-/**
- * Collectible Coping Strategy Cards
- */
-export const WELLNESS_CARDS: WellnessCard[] = [
-  {
-    id: "card-pomodoro",
-    name: "Pomodoro Focus Guard",
-    icon: "timer",
-    bonus: "+15% Focus Shield",
-    quote: "25 minutes of deep attention, followed by a true 5-minute breather.",
-  },
-  {
-    id: "card-breathe",
-    name: "Box Breathing Bubble",
-    icon: "wind",
-    bonus: "Dash Cooldown -0.2s",
-    quote: "Breathe in 4, hold 4, breathe out 4, hold 4. You are centered.",
-  },
-  {
-    id: "card-sleep",
-    name: "Sleep Sanctuary",
-    icon: "moon",
-    bonus: "+25 Maximum Health",
-    quote: "Sleep is when your brain files away everything you studied.",
-  },
-  {
-    id: "card-buddy",
-    name: "Peer Buddy Spark",
-    icon: "heart",
-    bonus: "+20% Attack Energy",
-    quote: "You never have to shoulder academic pressure alone.",
-  },
-];
-
-/**
- * The 7 Levels of Chapter 1 "Exam Week"
+ * The 7 Levels:
+ * 1 Fight (tutorial), 2 Story, 3 Fight, 4 Story, 5 Fight, 6 AI Chat, 7 Ending
  */
 export const LEVELS_DATA: LevelConfig[] = [
   {
     id: 1,
     title: "Rooftop Practice",
     subtitle: "Tutorial & Controls Calibration",
-    location: "Block B Rooftop Garden",
+    location: "Block B Rooftop",
     type: "Fight",
     icon: "swords",
     badge: "Level 1 • Tutorial",
@@ -261,132 +88,123 @@ export const LEVELS_DATA: LevelConfig[] = [
     targetCount: 3,
     estimatedTime: "30s",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "Exam week starts in three days... My mind has been racing all morning.", mood: "worried" },
-      { speaker: "Kai", avatar: "kai", text: "Hey Rin! Up here on the rooftop, the breeze is nice. Let's do a quick physical warm-up before revision.", mood: "happy" },
-      { speaker: "Rin", avatar: "rin", text: "Good idea. Let me stretch my legs and calibrate my focus.", mood: "determined" },
+      { speaker: "Rin", avatar: "rin", text: "Quiet up here on the rooftop. Good place to clear my head.", mood: "neutral" },
+      { speaker: "Jay", avatar: "jay", text: "Hey Rin! Good to catch you here. Let's do a quick physical warm-up before heading down.", mood: "happy" },
+      { speaker: "Rin", avatar: "rin", text: "Let's do it. Stretch my legs and test out my focus shots.", mood: "determined" },
     ],
   },
   {
     id: 2,
-    title: "Canteen Whispers",
-    subtitle: "Recess Real Talk",
-    location: "School Canteen Tables",
+    title: "Behind the Bleachers",
+    subtitle: "The Offer & The Myths",
+    location: "School Field Bleachers",
     type: "Story",
     icon: "book-open",
     badge: "Level 2 • Story",
-    summary: "Sit down with Kai over chicken rice and milo peng to talk about the weight of expectations.",
+    summary: "Jay tells Rin about being offered a vape after school, and the pressure to fit in.",
     estimatedTime: "2 mins",
     dialogue: [
-      { speaker: "Kai", avatar: "kai", text: "Everyone in the canteen is clutching 10-year series papers like shields. It feels so tense.", mood: "worried" },
-      { speaker: "Rin", avatar: "rin", text: "My parents kept asking if I'm hitting straight A's for prelims. It feels like every hour I rest is wasted.", mood: "worried" },
-      { speaker: "Kai", avatar: "kai", text: "I felt that way too until our school counsellor shared something important: rest is part of preparation, not the opposite of it.", mood: "calm" },
-      { speaker: "Rin", avatar: "rin", text: "Really? But if I rest, aren't other people getting ahead?", mood: "neutral" },
-      { speaker: "Kai", avatar: "kai", text: "Brain science says no! Sleep consolidates memories into long-term recall. If you don't sleep, 40% of what you crammed disappears.", mood: "happy" },
-      { speaker: "Rin", avatar: "rin", text: "That makes a lot of sense. So taking breaks isn't being lazy—it's respecting how our brains actually work.", mood: "determined" },
+      { speaker: "Jay", avatar: "jay", text: "Hey Rin... something weird happened yesterday near the stairwell.", mood: "worried" },
+      { speaker: "Rin", avatar: "rin", text: "What happened? You looked distracted all morning.", mood: "neutral" },
+      { speaker: "Jay", avatar: "jay", text: "A couple of seniors had one of those fruit-flavoured vape pods. They passed it to me and said 'try lah, it's just harmless flavour and water vapour'.", mood: "worried" },
+      { speaker: "Rin", avatar: "rin", text: "That myth again. People keep saying it's harmless water vapour, but it's not. It's full of chemicals and nicotine designed to hook you.", mood: "determined" },
+      { speaker: "Jay", avatar: "jay", text: "I know... but when everyone is standing in a circle staring at you, it felt so awkward to say no. Like you're being uncool.", mood: "worried" },
+      { speaker: "Rin", avatar: "rin", text: "It's never uncool to protect your lungs and health, Jay. Let's stand our ground together.", mood: "determined" },
     ],
   },
   {
     id: 3,
-    title: "Classroom Chaos",
-    subtitle: "Clearing Doubt Sprites",
-    location: "Classroom 3-Courage",
+    title: "Vapour Mist Sprites",
+    subtitle: "Clearing the Pressure",
+    location: "Back Gate Pathway",
     type: "Fight",
     icon: "swords",
     badge: "Level 3 • Fight",
-    summary: "Swarms of Doubt Sprites and Procrastination Motes are filling the classroom! Dodge and clear them.",
-    targetCount: 12,
+    summary: "Cloudy Vapour Sprites and Peer Pressure motes are swarming the walkway! Dodge and clear them.",
+    targetCount: 8,
     estimatedTime: "1 min",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "The classroom feels so heavy right now. Look at all those swirling Doubt Sprites!", mood: "worried" },
-      { speaker: "Kai", avatar: "kai", text: "Those are just thoughts, Rin! They look scary, but a clear focus and a quick dash will clear them out.", mood: "determined" },
+      { speaker: "Rin", avatar: "rin", text: "Look at the walkway—thick clouds of lingering vapour and pressure motes!", mood: "worried" },
+      { speaker: "Jay", avatar: "jay", text: "Don't let them box you in, Rin! Dash through the clouds and clear the air!", mood: "determined" },
     ],
   },
   {
     id: 4,
-    title: "Study Buddy AI",
-    subtitle: "Interactive Wellness Mentor",
-    location: "Courtyard Study Pod",
-    type: "AI Chat",
-    icon: "message-circle",
-    badge: "Level 4 • AI Chat",
-    summary: "Check in with your empathetic AI study buddy for bite-sized advice, stress validation, and revision tips.",
-    estimatedTime: "Interactive",
+    title: "The Walk Home",
+    subtitle: "Real Friends & Respect",
+    location: "Park Connector",
+    type: "Story",
+    icon: "book-open",
+    badge: "Level 4 • Story",
+    summary: "Rin and Jay talk through practical ways to say no without feeling awkward.",
+    estimatedTime: "2 mins",
     dialogue: [
-      { speaker: "Buddy AI", avatar: "buddy", text: "Hello Rin! I'm your digital study companion. How are you feeling about your upcoming papers?", mood: "happy" },
+      { speaker: "Jay", avatar: "jay", text: "Walking out here in the fresh air feels so much better than being stuck in that haze.", mood: "calm" },
+      { speaker: "Rin", avatar: "rin", text: "I was thinking about what happened. If someone offers again, what are you going to say?", mood: "neutral" },
+      { speaker: "Jay", avatar: "jay", text: "I think keeping it simple works best. Just: 'No thanks, not my thing', or 'I'm good, I like my lungs for sports'.", mood: "happy" },
+      { speaker: "Rin", avatar: "rin", text: "Exactly. You don't need a huge speech. If they are real friends, they will respect a simple 'no' without pushing.", mood: "determined" },
+      { speaker: "Jay", avatar: "jay", text: "Yeah. If they keep pushing, they care more about their own habit than about you.", mood: "calm" },
+      { speaker: "Rin", avatar: "rin", text: "Spot on. Having each other's backs makes it a lot easier to stay true to yourself.", mood: "happy" },
     ],
   },
   {
     id: 5,
-    title: "Library Showdown",
-    subtitle: "Confronting the Burnout Beast",
-    location: "Level 4 Central Library",
+    title: "The Pressure Cloud",
+    subtitle: "Courtyard Showdown",
+    location: "Covered Courtyard",
     type: "Fight",
     icon: "swords",
     badge: "Level 5 • Fight",
-    summary: "A towering 'Burnout Beast' made of overdue notes and panic clouds has appeared. Dash through shockwaves to triumph!",
+    summary: "A towering Smoke Golem representing heavy peer pressure blocks the way. Dash through the shockwaves to disperse it!",
     targetCount: 1,
     estimatedTime: "1.5 mins",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "Whoa... That huge shadowy figure hovering over the study cubicles... That's the Burnout Beast!", mood: "worried" },
-      { speaker: "Kai", avatar: "kai", text: "Remember our strategy! Dash right through its panic waves when they ripple out. Keep your distance and chip away calmly!", mood: "determined" },
+      { speaker: "Rin", avatar: "rin", text: "That massive shadow looming in the courtyard... it's the cloud of peer pressure!", mood: "worried" },
+      { speaker: "Jay", avatar: "jay", text: "Keep your distance and watch out for the expanding smoke rings! Dash right through them when they expand!", mood: "determined" },
     ],
   },
   {
     id: 6,
-    title: "Evening Reflections",
-    subtitle: "Sunset at the Bus Stop",
-    location: "School Gate & Bus Stop 142",
-    type: "Story",
-    icon: "book-open",
-    badge: "Level 6 • Story",
-    summary: "Watching the twilight sky, Kai and Rin realize an essential truth about grades and self-worth.",
-    estimatedTime: "2 mins",
+    title: "Safe Space Chat",
+    subtitle: "Peer Pressure & Myths Q&A",
+    location: "Courtyard Bench",
+    type: "AI Chat",
+    icon: "message-circle",
+    badge: "Level 6 • AI Chat",
+    summary: "An open, non-judgmental space to talk through peer pressure situations, practice saying no, and discuss myths about vapes or drugs.",
+    estimatedTime: "Interactive",
     dialogue: [
-      { speaker: "Kai", avatar: "kai", text: "Look at that orange sunset over the skyline. It's so quiet now.", mood: "calm" },
-      { speaker: "Rin", avatar: "rin", text: "After that fight in the library, I realized... The panic wasn't the exam. It was my fear of letting people down.", mood: "neutral" },
-      { speaker: "Kai", avatar: "kai", text: "That's huge, Rin. An exam is just a snapshot of what you know on one specific morning. It doesn't measure your kindness, your creativity, or your future.", mood: "happy" },
-      { speaker: "Rin", avatar: "rin", text: "Whatever score comes out on the report slip, I'm proud of the effort I put in. And I have good friends beside me.", mood: "determined" },
-      { speaker: "Kai", avatar: "kai", text: "And if anyone ever feels like they can't carry the weight alone, there are always real people ready to listen—like SOS (1767) or CHAT.", mood: "calm" },
+      { speaker: "Rin", avatar: "rin", text: "Sometimes it's helpful to talk things through and practice what to say when put on the spot.", mood: "neutral" },
     ],
   },
   {
     id: 7,
-    title: "Exam Day & Beyond",
-    subtitle: "Chapter 1 Finale & Resources",
-    location: "Main Examination Hall",
+    title: "Standing Tall",
+    subtitle: "Chapter 1 Finale",
+    location: "School Plaza",
     type: "Ending",
     icon: "trophy",
     badge: "Level 7 • Ending",
-    summary: "You walk into the exam hall with calm clarity. You are prepared, supported, and ready.",
+    summary: "Rin and Jay stand confident, knowing that real strength is choosing what is right for yourself.",
     estimatedTime: "Complete",
     endingSummary: {
-      headline: "You Completed Chapter 1: Exam Week!",
+      headline: "You Completed Chapter 1: Standing Your Ground!",
       takeaways: [
-        "Your worth is never defined by a letter on an exam slip.",
-        "Sleep and scheduled rest consolidate your memories—they are active study tools.",
-        "Reaching out for peer or professional support is a strength, never a weakness.",
-        "Whenever exam stress feels heavy, Singapore helplines like SOS (1767) and YouthLine (1771) are always here.",
+        "Real friends respect your boundaries and your choices.",
+        "You never have to inhale or try anything just to fit into a group.",
+        "Common myths like 'it's just water vapour' hide real risks and addictive substances.",
+        "Standing your ground takes real courage—and you have that courage inside you.",
       ],
     },
   },
 ];
 
 /**
- * Suggested conversation starters and offline fallback responses for the AI Study Buddy
+ * Suggested conversation starters for the Peer Pressure & Drug Prevention Chat
  */
 export const AI_CHAT_PROMPTS = [
-  "How can I stop overthinking the night before an exam?",
-  "What is the best way to revise when I feel overwhelmed?",
-  "Can you teach me the Box Breathing technique?",
-  "How do I deal with parental pressure about my grades?",
-  "What are some real Singapore youth helplines if I need someone to talk to?",
+  "How do I say no when older students push me to try a vape?",
+  "What is the myth about vapes being 'just water vapour'?",
+  "What should I do if my close friend starts vaping?",
+  "How can I handle feeling left out when everyone else is doing it?",
 ];
-
-export const AI_CHAT_FALLBACKS: Record<string, string> = {
-  default: "Hey there! I hear you. Exam week in Singapore can feel really intense, but you're doing better than you think. Remember to take steady sips of water, pause for 5 minutes every half hour, and remember: your effort matters, but a test paper doesn't define your entire worth!",
-  overthinking: "It's completely normal for thoughts to race before a paper! Try the 4-7-8 or Box Breathing trick: inhale for 4 seconds, hold for 4 seconds, exhale slowly for 4 seconds. Write down your top 3 worries on paper to get them out of your head, then close your books. Your brain needs sleep tonight to lock in what you've revised!",
-  overwhelmed: "When revision feels like an insurmountable mountain, shrink the goal. Pick just ONE sub-topic for 20 minutes (like two math problems or one physics concept). Put away your phone, set a timer, and tackle just that. Action breaks anxiety!",
-  breathing: "Let's do Box Breathing together: Inhale slowly through your nose for 4 counts... Hold your breath gently for 4 counts... Exhale smoothly through your mouth for 4 counts... Hold empty for 4 counts. Doing this for just 2 minutes lowers your heart rate and resets your nervous system.",
-  pressure: "Parental expectations often come from love and anxiety about your future, but hearing it constantly can feel suffocating. Try communicating when things are calm: 'Mum/Dad, I'm working hard and revising, but when grades are brought up constantly it makes me anxious. Having your encouragement helps me focus much better.'",
-  helplines: "If you or a friend ever need a safe, confidential listening ear in Singapore: You can call SOS at 1767 (or WhatsApp 9151 1767, 24/7), call YouthLine at 1771, or reach CHAT at 6493 6500 for youth mental health support. You are never alone!",
-};
