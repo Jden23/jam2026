@@ -1,0 +1,6 @@
+{
+  "name": "Buddy Up",
+  "description": "An action web game for Singapore teens featuring Rin in Chapter 1: Exam Week, with smooth combat, rooftop tutorial, interactive story, and AI study companion.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
