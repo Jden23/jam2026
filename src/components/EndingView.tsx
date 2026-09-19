@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import { LevelConfig } from '../content';
+import { LevelConfig, IMAGES } from '../content';
 import { Trophy, CheckCircle, ArrowLeft, RotateCcw } from 'lucide-react';
 import { sound } from '../audio';
 
@@ -33,25 +33,34 @@ export const EndingView: React.FC<EndingViewProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-4 px-3 flex flex-col items-center select-none">
-      {/* Top Bar */}
-      <div className="w-full flex items-center justify-between mb-6">
+    <div className="relative w-full h-screen min-h-screen overflow-y-auto flex flex-col bg-slate-950 select-none p-3 sm:p-6">
+      {/* Full-screen Background Image with object-fit cover & blur */}
+      <img
+        src={IMAGES.ARENA}
+        alt="Victory background"
+        className="fixed inset-0 w-full h-full object-cover object-center filter blur-sm brightness-[0.22] pointer-events-none"
+        referrerPolicy="no-referrer"
+      />
+      <div className="fixed inset-0 bg-slate-950/60 pointer-events-none" />
+
+      {/* Top Bar (Padded on right for persistent floating buttons) */}
+      <div className="relative z-20 w-full flex items-center justify-between mb-4 sm:mb-6 pr-24 sm:pr-28">
         <button
           id="btn-ending-back-map"
           onClick={onExitToMap}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-bold transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/90 hover:bg-slate-800 text-slate-200 rounded-xl text-sm font-bold border border-slate-700/80 transition-colors backdrop-blur-md cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-[#2dd4bf]" />
           <span>Return to Map</span>
         </button>
 
-        <span className="text-xs font-bold text-emerald-400 bg-emerald-950/80 px-3 py-1 rounded-full border border-emerald-500/30">
+        <span className="text-xs font-bold text-emerald-400 bg-emerald-950/90 px-3 py-1 rounded-full border border-emerald-500/40 backdrop-blur-md">
           Chapter 1 Complete
         </span>
       </div>
 
       {/* Main Victory Certificate Card */}
-      <div className="w-full bg-gradient-to-b from-slate-900 to-indigo-950/60 border-2 border-amber-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl text-center relative overflow-hidden">
+      <div className="relative z-10 w-full max-w-2xl mx-auto my-auto bg-gradient-to-b from-slate-900/95 to-indigo-950/90 border-2 border-amber-500/50 rounded-3xl p-6 sm:p-8 shadow-2xl text-center backdrop-blur-xl overflow-hidden">
         {/* Glow backdrop */}
         <div className="absolute -top-16 -left-16 w-48 h-48 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-16 -right-16 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />

@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useRef, useEffect } from 'react';
-import { LevelConfig, AI_CHAT_PROMPTS } from '../content';
+import { LevelConfig, AI_CHAT_PROMPTS, IMAGES } from '../content';
 import { ArrowLeft, Send, Sparkles, MessageCircle, User, Check, RefreshCw } from 'lucide-react';
 import { sound } from '../audio';
 
@@ -105,15 +105,24 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
   };
 
   return (
-    <div className="w-full max-w-3xl mx-auto py-4 px-3 flex flex-col items-center select-none">
-      {/* Top Header */}
-      <div className="w-full flex items-center justify-between mb-4">
+    <div className="relative w-full h-screen min-h-screen overflow-hidden flex flex-col bg-slate-950 select-none">
+      {/* Background Image full-screen cover */}
+      <img
+        src={IMAGES.PARK}
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover filter blur-sm brightness-[0.25] pointer-events-none"
+        referrerPolicy="no-referrer"
+      />
+      <div className="absolute inset-0 bg-slate-950/60 pointer-events-none" />
+
+      {/* Top Header (Padded on right for floating buttons) */}
+      <div className="relative z-20 w-full px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between pr-24 sm:pr-28">
         <button
           id="btn-chat-exit"
           onClick={onExitToMap}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl text-sm font-bold transition-colors cursor-pointer"
+          className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-900/90 hover:bg-slate-800 text-slate-200 rounded-xl text-sm font-bold border border-slate-700/80 transition-colors backdrop-blur-md cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-[#2dd4bf]" />
           <span>Back to Map</span>
         </button>
 
@@ -132,8 +141,8 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
         </div>
       </div>
 
-      {/* Main Chat Box */}
-      <div className="w-full bg-slate-900 border-2 border-slate-800 rounded-3xl overflow-hidden shadow-2xl flex flex-col h-[520px]">
+      {/* Main Chat Box - fills remainder of window cleanly */}
+      <div className="relative z-10 flex-1 w-full max-w-4xl mx-auto flex flex-col overflow-hidden bg-slate-950/85 backdrop-blur-xl border-t sm:border-x border-slate-800/80 sm:rounded-t-3xl shadow-2xl">
         {/* Chat Title Bar */}
         <div className="px-5 py-3.5 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">

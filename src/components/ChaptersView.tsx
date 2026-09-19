@@ -21,13 +21,11 @@ import { sound } from '../audio';
 interface ChaptersViewProps {
   progress: GameProgress;
   onSelectChapter1: () => void;
-  onOpenFactsHelp: () => void;
 }
 
 export const ChaptersView: React.FC<ChaptersViewProps> = ({
   progress,
   onSelectChapter1,
-  onOpenFactsHelp,
 }) => {
   const [bgFailed, setBgFailed] = useState<boolean>(false);
   const [mayaImgFailed, setMayaImgFailed] = useState<boolean>(false);
@@ -44,9 +42,9 @@ export const ChaptersView: React.FC<ChaptersViewProps> = ({
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-65px)] w-full overflow-hidden flex flex-col justify-between py-6 sm:py-8 px-4 sm:px-8 select-none">
+    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col justify-between py-8 sm:py-12 px-4 sm:px-8 select-none">
       {/* 1. Full-screen TITLE Background Image with Dark Gradient at the Bottom */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         {!bgFailed ? (
           <img
             src={IMAGES.TITLE}
@@ -63,20 +61,8 @@ export const ChaptersView: React.FC<ChaptersViewProps> = ({
         <div className="absolute inset-0 bg-radial-at-c from-transparent via-slate-950/30 to-slate-950/80" />
       </div>
 
-      {/* Floating Facts & Help in top corner */}
-      <div className="relative z-20 w-full max-w-6xl mx-auto flex justify-end mb-2">
-        <button
-          id="btn-open-facts-help-corner"
-          onClick={() => {
-            sound.playButtonClick();
-            onOpenFactsHelp();
-          }}
-          className="flex items-center gap-2 px-3.5 py-1.5 bg-slate-950/80 hover:bg-slate-900 text-rose-300 hover:text-white border border-rose-500/40 hover:border-rose-400 rounded-full text-xs font-bold backdrop-blur-md shadow-lg transition-all hover:scale-105 cursor-pointer"
-        >
-          <Heart className="w-3.5 h-3.5 fill-rose-500 text-rose-500" />
-          <span>Facts & Help</span>
-        </button>
-      </div>
+      {/* Top spacing clearance for floating buttons */}
+      <div className="h-6 sm:h-8" />
 
       {/* 2. Big Bold Brush-Style Title "Buddy Up" & Tagline */}
       <div className="relative z-10 text-center max-w-3xl mx-auto mb-6 sm:mb-8">

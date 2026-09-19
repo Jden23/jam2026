@@ -11,20 +11,18 @@
 import React, { useState } from 'react';
 import { LEVELS_DATA, LevelConfig, IMAGES } from '../content';
 import { GameProgress } from '../types';
-import { Swords, BookOpen, MessageCircle, Trophy, Check, Lock, Play, Sparkles, ArrowLeft } from 'lucide-react';
+import { Swords, BookOpen, MessageCircle, Trophy, Check, Lock, Play, Sparkles, ArrowLeft, Heart } from 'lucide-react';
 import { sound } from '../audio';
 
 interface LevelMapProps {
   progress: GameProgress;
   onSelectLevel: (level: LevelConfig) => void;
-  onOpenHelplines: () => void;
   onBackToChapters: () => void;
 }
 
 export const LevelMap: React.FC<LevelMapProps> = ({
   progress,
   onSelectLevel,
-  onOpenHelplines,
   onBackToChapters,
 }) => {
   const [bgFailed, setBgFailed] = useState<boolean>(false);
@@ -56,9 +54,9 @@ export const LevelMap: React.FC<LevelMapProps> = ({
   };
 
   return (
-    <div className="relative min-h-[calc(100vh-65px)] w-full overflow-hidden flex flex-col items-center py-6 px-3 sm:px-6 select-none">
+    <div className="relative min-h-screen w-full overflow-x-hidden flex flex-col items-center py-6 sm:py-8 px-3 sm:px-6 select-none">
       {/* 1. TITLE Image as Blurred, Darkened Background */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
         {!bgFailed ? (
           <img
             src={IMAGES.TITLE}
@@ -74,8 +72,8 @@ export const LevelMap: React.FC<LevelMapProps> = ({
       </div>
 
       <div className="relative z-10 w-full max-w-4xl flex flex-col items-center">
-        {/* Top Navigation Row */}
-        <div className="w-full flex items-center justify-between mb-4">
+        {/* Top Navigation Row (padded on right for floating action buttons) */}
+        <div className="w-full flex items-center justify-between mb-4 pr-24 sm:pr-28">
           <button
             id="btn-back-to-chapters"
             onClick={() => {
@@ -232,26 +230,19 @@ export const LevelMap: React.FC<LevelMapProps> = ({
           </div>
         </div>
 
-        {/* Footer Banner */}
-        <div className="w-full max-w-xl mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left shadow-lg">
+        {/* Footer Banner (Informative reminder without duplicate button) */}
+        <div className="w-full max-w-xl mt-6 p-4 rounded-2xl bg-slate-950/80 border border-slate-800 backdrop-blur-md flex items-center gap-3.5 text-left shadow-lg">
+          <div className="w-10 h-10 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30 flex items-center justify-center shrink-0">
+            <Heart className="w-5 h-5 fill-rose-500 text-rose-500" />
+          </div>
           <div>
             <h2 className="text-sm font-black text-white font-['Fredoka',sans-serif]">
               Need someone to talk to or want verified facts?
             </h2>
             <p className="text-xs text-slate-400">
-              Check out verified vape myths, facts, and confidential help contacts.
+              Tap the heart button in the top-right corner anytime for confidential helplines and myth busters.
             </p>
           </div>
-          <button
-            id="btn-open-facts-help-map"
-            onClick={() => {
-              sound.playButtonClick();
-              onOpenHelplines();
-            }}
-            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-[#2dd4bf] border border-[#2dd4bf]/40 hover:border-[#2dd4bf] rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer shrink-0"
-          >
-            Facts & Help
-          </button>
         </div>
       </div>
     </div>

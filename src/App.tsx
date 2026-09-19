@@ -101,80 +101,46 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0c0f1d] text-slate-100 flex flex-col font-['Nunito',sans-serif]">
-      {/* Top Main Navigation Bar (Clean & Uncluttered: Logo, Sound, Facts & Help) */}
-      <header className="w-full bg-slate-950/90 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-40 px-4 py-2.5">
-        <div className="max-w-5xl mx-auto flex items-center justify-between">
-          {/* Logo & Title */}
-          <div
-            onClick={handleLogoClick}
-            className="flex items-center gap-2.5 cursor-pointer group"
-          >
-            {/* Anime Maya portrait avatar with teal glow */}
-            <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-[#2dd4bf] shadow-[0_0_12px_rgba(45,212,191,0.4)] group-hover:scale-105 transition-transform bg-slate-900 shrink-0">
-              <img
-                src={IMAGES.MAYA}
-                alt="Maya"
-                className="w-full h-full object-cover object-top"
-                referrerPolicy="no-referrer"
-                onError={(e) => {
-                  e.currentTarget.style.display = 'none';
-                }}
-              />
-            </div>
+    <div className="min-h-screen w-full bg-[#0c0f1d] text-slate-100 font-['Nunito',sans-serif] relative overflow-x-hidden">
+      {/* Floating Quick Action Buttons (Top-Right of all screens) */}
+      <div className="fixed top-3 right-3 sm:top-4 sm:right-4 z-50 flex items-center gap-2 pointer-events-auto">
+        {/* Sound Toggle */}
+        <button
+          id="btn-floating-sound"
+          onClick={toggleSound}
+          aria-label={settings.soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
+          title={settings.soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
+          className="w-10 h-10 rounded-full bg-slate-950/85 hover:bg-slate-900 text-slate-200 hover:text-white border border-slate-700/80 hover:border-[#2dd4bf] backdrop-blur-md shadow-xl flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          {settings.soundEnabled ? (
+            <Volume2 className="w-4 h-4 text-[#2dd4bf]" />
+          ) : (
+            <VolumeX className="w-4 h-4 text-rose-400" />
+          )}
+        </button>
 
-            <div>
-              <div className="flex items-center gap-1.5">
-                <span className="font-['Fredoka',sans-serif] text-lg font-black text-white tracking-tight">
-                  {APP_INFO.title}
-                </span>
-                <span className="text-[10px] font-black uppercase text-[#2dd4bf] bg-[#2dd4bf]/20 px-2 py-0.5 rounded-full border border-[#2dd4bf]/40">
-                  Anime VN
-                </span>
-              </div>
-              <span className="text-[11px] text-slate-400 hidden sm:inline">
-                {APP_INFO.tagline}
-              </span>
-            </div>
-          </div>
+        {/* Facts & Help Heart Button */}
+        <button
+          id="btn-floating-facts-help"
+          onClick={() => {
+            sound.playButtonClick();
+            setShowHelplines(true);
+          }}
+          aria-label="Facts & Help"
+          title="Facts & Help"
+          className="w-10 h-10 rounded-full bg-slate-950/85 hover:bg-slate-900 text-rose-400 hover:text-rose-300 border border-rose-500/50 hover:border-rose-400 backdrop-blur-md shadow-xl flex items-center justify-center transition-all hover:scale-105 active:scale-95 cursor-pointer"
+        >
+          <Heart className="w-4 h-4 fill-rose-500 text-rose-500" />
+        </button>
+      </div>
 
-          {/* Top Actions: ONLY Sound button and Facts & Help */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            {/* Sound Toggle */}
-            <button
-              id="btn-header-sound"
-              onClick={toggleSound}
-              aria-label={settings.soundEnabled ? 'Mute Audio' : 'Unmute Audio'}
-              className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl transition-colors cursor-pointer"
-            >
-              {settings.soundEnabled ? (
-                <Volume2 className="w-4 h-4 text-emerald-400" />
-              ) : (
-                <VolumeX className="w-4 h-4 text-rose-400" />
-              )}
-            </button>
-
-            {/* Facts & Help Button */}
-            <button
-              id="btn-open-facts-help-header"
-              onClick={() => setShowHelplines(true)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900/80 text-rose-300 border border-rose-500/40 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
-            >
-              <Heart className="w-3.5 h-3.5 fill-rose-500" />
-              <span>Facts & Help</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content Stage */}
-      <main className="flex-1 w-full max-w-5xl mx-auto py-4 px-2 sm:px-4 flex flex-col justify-center">
+      {/* Main Content Stage (Full-screen edge-to-edge mobile game experience) */}
+      <main className="w-full min-h-screen relative flex flex-col">
         {/* Chapters Home Screen */}
         {activeLevel === null && currentView === 'chapters' && (
           <ChaptersView
             progress={progress}
             onSelectChapter1={() => setCurrentView('level_map')}
-            onOpenFactsHelp={() => setShowHelplines(true)}
           />
         )}
 
@@ -183,7 +149,6 @@ export default function App() {
           <LevelMap
             progress={progress}
             onSelectLevel={(lvl) => setActiveLevel(lvl)}
-            onOpenHelplines={() => setShowHelplines(true)}
             onBackToChapters={() => setCurrentView('chapters')}
           />
         )}

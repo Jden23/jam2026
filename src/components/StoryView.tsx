@@ -56,6 +56,16 @@ export const StoryView: React.FC<StoryViewProps> = ({
   const isMayaSpeaking = currentLine.speaker === 'Maya' || currentLine.avatar === 'maya';
   const isRightSpeaking = !isMayaSpeaking;
 
+  // Mask style to blend portraits into scene with soft fade on bottom and side edges
+  const portraitMaskStyle: React.CSSProperties = {
+    WebkitMaskImage:
+      'radial-gradient(ellipse 92% 88% at 50% 38%, #000 45%, rgba(0,0,0,0.85) 65%, transparent 98%), linear-gradient(to bottom, #000 65%, transparent 100%)',
+    maskImage:
+      'radial-gradient(ellipse 92% 88% at 50% 38%, #000 45%, rgba(0,0,0,0.85) 65%, transparent 98%), linear-gradient(to bottom, #000 65%, transparent 100%)',
+    WebkitMaskComposite: 'destination-in',
+    maskComposite: 'intersect',
+  };
+
   // Rapid typewriter effect for anime VN text
   useEffect(() => {
     const fullText = currentLine.text || '';
@@ -115,7 +125,7 @@ export const StoryView: React.FC<StoryViewProps> = ({
   return (
     <div
       onClick={advanceDialogue}
-      className="relative w-full h-[calc(100vh-65px)] min-h-[550px] max-h-[820px] max-w-6xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-slate-800 flex flex-col justify-between select-none cursor-pointer bg-slate-950"
+      className="relative w-full h-screen min-h-screen overflow-hidden flex flex-col justify-between select-none cursor-pointer bg-slate-950"
     >
       {/* 1. Full-screen Background Image with Object-Fit: Cover & Fallback */}
       {!bgLoadFailed ? (
@@ -131,10 +141,10 @@ export const StoryView: React.FC<StoryViewProps> = ({
       )}
 
       {/* Atmospheric overlays: subtle top vignette, soft ambient lighting, and bottom dark fade */}
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/70 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-slate-950/60 pointer-events-none" />
 
-      {/* 2. Top Header Navigation (Small "Back to map" on left, "Skip" on right) */}
-      <div className="relative z-30 w-full p-4 flex items-center justify-between pointer-events-auto">
+      {/* 2. Top Header Navigation (Small "Back to map" on left, "Skip" on right; padded right for floating buttons) */}
+      <div className="relative z-30 w-full p-3 sm:p-4 flex items-center justify-between pointer-events-auto pr-24 sm:pr-28">
         <button
           id="btn-story-back-map"
           onClick={(e) => {
@@ -167,17 +177,20 @@ export const StoryView: React.FC<StoryViewProps> = ({
         </button>
       </div>
 
-      {/* 3. Anime VN Character Stage (Large portraits standing on sides) */}
-      <div className="relative z-20 flex-1 flex items-end justify-between px-4 sm:px-12 md:px-20 pointer-events-none pb-2">
-        {/* Maya Portrait (Left Side) */}
+      {/* 3. Anime VN Character Stage (Masked edge-to-edge portraits standing naturally) */}
+      <div className="relative z-20 flex-1 flex items-end justify-between px-2 sm:px-12 md:px-20 pointer-events-none pb-0 overflow-hidden">
+        {/* Maya Portrait (Left Side) - Full brightness & slightly larger when speaking */}
         <div
           className={`transition-all duration-300 transform flex flex-col items-center origin-bottom ${
             isMayaSpeaking
-              ? 'scale-100 opacity-100 drop-shadow-[0_0_25px_rgba(45,212,191,0.5)] z-20 translate-y-0'
-              : 'scale-95 opacity-40 grayscale-[25%] z-10 translate-y-2'
+              ? 'scale-105 opacity-100 brightness-100 z-20 translate-y-0 filter drop-shadow-[0_10px_35px_rgba(45,212,191,0.45)]'
+              : 'scale-90 opacity-40 brightness-60 filter grayscale-[20%] z-10 translate-y-2'
           }`}
         >
-          <div className="relative w-44 sm:w-60 md:w-72 h-[280px] sm:h-[370px] md:h-[430px] rounded-t-3xl overflow-hidden border-2 border-b-0 border-[#2dd4bf]/70 shadow-2xl bg-slate-900/60 backdrop-blur-sm">
+          <div
+            style={portraitMaskStyle}
+            className="relative w-28 sm:w-56 md:w-72 lg:w-80 h-[220px] sm:h-[350px] md:h-[430px] lg:h-[480px] overflow-hidden bg-transparent"
+          >
             {!mayaLoadFailed ? (
               <img
                 src={IMAGES.MAYA}
@@ -194,20 +207,23 @@ export const StoryView: React.FC<StoryViewProps> = ({
                 <span className="text-xs text-sky-300">Determined & True</span>
               </div>
             )}
-            {/* Subtle bottom fade into the dialogue box */}
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none" />
+            {/* Soft bottom fade blending portrait into dialogue zone */}
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent pointer-events-none" />
           </div>
         </div>
 
-        {/* Jay / Teacher Portrait (Right Side) */}
+        {/* Jay / Teacher Portrait (Right Side) - Full brightness & slightly larger when speaking */}
         <div
           className={`transition-all duration-300 transform flex flex-col items-center origin-bottom ${
             isRightSpeaking
-              ? 'scale-100 opacity-100 drop-shadow-[0_0_25px_rgba(251,191,36,0.4)] z-20 translate-y-0'
-              : 'scale-95 opacity-40 grayscale-[25%] z-10 translate-y-2'
+              ? 'scale-105 opacity-100 brightness-100 z-20 translate-y-0 filter drop-shadow-[0_10px_35px_rgba(251,191,36,0.45)]'
+              : 'scale-90 opacity-40 brightness-60 filter grayscale-[20%] z-10 translate-y-2'
           }`}
         >
-          <div className="relative w-44 sm:w-60 md:w-72 h-[280px] sm:h-[370px] md:h-[430px] rounded-t-3xl overflow-hidden border-2 border-b-0 border-amber-400/70 shadow-2xl bg-slate-900/60 backdrop-blur-sm">
+          <div
+            style={portraitMaskStyle}
+            className="relative w-28 sm:w-56 md:w-72 lg:w-80 h-[220px] sm:h-[350px] md:h-[430px] lg:h-[480px] overflow-hidden bg-transparent"
+          >
             {!rightLoadFailed ? (
               <img
                 src={rightCharacterImage}
@@ -226,28 +242,23 @@ export const StoryView: React.FC<StoryViewProps> = ({
                 <span className="text-xs text-amber-300">Friend</span>
               </div>
             )}
-            {/* Subtle bottom fade into the dialogue box */}
-            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 via-slate-950/50 to-transparent pointer-events-none" />
+            {/* Soft bottom fade blending portrait into dialogue zone */}
+            <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent pointer-events-none" />
           </div>
         </div>
       </div>
 
-      {/* 4. Visual Novel Dialogue Box at Bottom */}
-      <div className="relative z-30 w-full px-3 sm:px-6 pb-4 sm:pb-6 pointer-events-auto">
-        <div className="relative w-full bg-slate-950/90 backdrop-blur-xl border-2 border-[#2dd4bf] shadow-[0_0_35px_rgba(45,212,191,0.3)] rounded-3xl p-5 sm:p-6 transition-all hover:border-[#2dd4bf] group">
-          {/* Floating Character Name Tag */}
+      {/* 4. Visual Novel Dialogue Box at Bottom (Takes bottom third of screen on phones) */}
+      <div className="relative z-30 w-full px-2 sm:px-6 pb-2 sm:pb-6 pointer-events-auto h-[34vh] min-h-[200px] sm:h-auto">
+        <div className="relative w-full h-full sm:h-auto bg-slate-950/92 backdrop-blur-xl border-2 border-[#2dd4bf] shadow-[0_0_35px_rgba(45,212,191,0.3)] rounded-2xl sm:rounded-3xl p-4 sm:p-6 transition-all hover:border-[#2dd4bf] group flex flex-col justify-between">
+          {/* Floating Character Name Tag (No empty dot or icon inside) */}
           <div
-            className={`absolute -top-5 left-6 px-6 py-1.5 rounded-2xl border-2 font-black text-sm sm:text-base tracking-wide shadow-lg flex items-center gap-2 backdrop-blur-md ${
+            className={`absolute -top-4 sm:-top-5 left-4 sm:left-6 px-4 sm:px-6 py-1 sm:py-1.5 rounded-2xl border-2 font-black text-xs sm:text-base tracking-wide shadow-lg backdrop-blur-md ${
               isMayaSpeaking
                 ? 'bg-slate-950 text-[#2dd4bf] border-[#2dd4bf] shadow-[0_0_15px_rgba(45,212,191,0.4)]'
                 : 'bg-slate-950 text-amber-300 border-amber-400 shadow-[0_0_15px_rgba(251,191,36,0.3)]'
             }`}
           >
-            <div
-              className={`w-2 h-2 rounded-full animate-ping ${
-                isMayaSpeaking ? 'bg-[#2dd4bf]' : 'bg-amber-400'
-              }`}
-            />
             <span className="font-['Fredoka',sans-serif]">{currentLine.speaker}</span>
           </div>
 

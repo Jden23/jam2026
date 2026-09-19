@@ -924,32 +924,31 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   }, [level.id, settings.screenShake, triggerShoot]);
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto flex flex-col items-center select-none">
-      {/* Top Combat Navigation & HUD Overlay */}
-      <div className="w-full flex items-center justify-between px-4 py-2 bg-slate-900/90 border-b border-slate-800 backdrop-blur-md rounded-t-2xl z-20">
+    <div className="relative w-full h-screen min-h-screen flex flex-col select-none bg-[#0c0f1d] overflow-hidden">
+      {/* Top Combat Navigation & HUD Overlay (Edge-to-edge with right-padding for floating buttons) */}
+      <div className="w-full flex items-center justify-between px-3 sm:px-4 py-2 bg-slate-950/90 border-b border-slate-800 backdrop-blur-md z-20 pr-24 sm:pr-28">
         <button
           id="btn-return-map"
           onClick={onExitToMap}
           className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800/80 hover:bg-slate-700 text-slate-200 hover:text-white rounded-lg text-sm font-semibold transition-colors cursor-pointer"
         >
-          <ArrowLeft className="w-4 h-4" />
+          <ArrowLeft className="w-4 h-4 text-[#2dd4bf]" />
           <span>Map</span>
         </button>
 
-        {/* Health Bar AND Exact Number Readout (Never rely solely on color!) */}
-        <div className="flex items-center gap-3 bg-slate-950/80 px-4 py-1.5 rounded-xl border border-slate-800">
+        {/* Health Bar AND Exact Number Readout */}
+        <div className="flex items-center gap-3 bg-slate-950/80 px-3 sm:px-4 py-1.5 rounded-xl border border-slate-800">
           <div className="flex items-center gap-1.5 text-rose-400">
             <Heart className="w-4 h-4 fill-rose-500" />
             <span className="text-xs font-bold uppercase tracking-wider text-slate-300">HP:</span>
           </div>
-          <div className="w-36 sm:w-48 h-4 bg-slate-800/90 rounded-full overflow-hidden relative border border-slate-700">
+          <div className="w-28 sm:w-48 h-4 bg-slate-800/90 rounded-full overflow-hidden relative border border-slate-700">
             <div
               className={`h-full transition-all duration-150 rounded-full ${
                 hudHp > 50 ? 'bg-emerald-500' : hudHp > 25 ? 'bg-amber-500' : 'bg-rose-500'
               }`}
               style={{ width: `${Math.max(0, (hudHp / hudMaxHp) * 100)}%` }}
             />
-            {/* Clear numerical display centered in bar */}
             <span className="absolute inset-0 flex items-center justify-center text-[10px] font-extrabold text-white drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
               {hudHp} / {hudMaxHp} ({Math.round((hudHp / hudMaxHp) * 100)}%)
             </span>
@@ -967,16 +966,8 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           )}
         </div>
 
-        {/* Controls toggles */}
+        {/* Touch toggle control */}
         <div className="flex items-center gap-2">
-          <button
-            id="btn-sound-toggle"
-            onClick={onToggleSound}
-            aria-label={settings.soundEnabled ? 'Mute sound' : 'Unmute sound'}
-            className="p-2 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-lg transition-colors cursor-pointer"
-          >
-            {settings.soundEnabled ? <Volume2 className="w-4 h-4" /> : <VolumeX className="w-4 h-4 text-rose-400" />}
-          </button>
           <button
             id="btn-touch-controls-toggle"
             onClick={() => setTouchActive((v) => !v)}
@@ -1020,14 +1011,14 @@ export const GameBoard: React.FC<GameBoardProps> = ({
         </div>
       )}
 
-      {/* Main Canvas Container */}
-      <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] max-h-[560px] bg-[#0c0f1d] border-x border-b border-slate-800 rounded-b-2xl overflow-hidden shadow-2xl">
+      {/* Main Canvas Container (Edge-to-edge full window) */}
+      <div className="relative flex-1 w-full bg-[#0c0f1d] overflow-hidden flex items-center justify-center">
         <canvas
           id="game-canvas"
           ref={canvasRef}
           width={800}
           height={500}
-          className="w-full h-full block cursor-crosshair touch-none"
+          className="w-full h-full block cursor-crosshair touch-none object-contain"
           onMouseMove={handleMouseMove}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
