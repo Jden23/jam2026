@@ -32,7 +32,7 @@ export const AIChatView: React.FC<AIChatViewProps> = ({
     {
       id: 'm-1',
       sender: 'assistant',
-      text: "Hey Rin! This is an open, judgment-free space to talk through peer pressure, practice how to say no, or discuss myths about vapes and drugs. What's on your mind?",
+      text: "Hey Maya! This is an open, judgment-free space to talk through peer pressure, practice how to say no, or discuss myths about vapes and drugs. What's on your mind?",
       time: 'Just now',
     },
   ]);

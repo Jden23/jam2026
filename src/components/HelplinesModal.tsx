@@ -211,10 +211,15 @@ export const HelplinesModal: React.FC<HelplinesModalProps> = ({
         </div>
 
         {/* Modal Footer */}
-        <div className="px-5 py-3 bg-slate-950 border-t border-slate-800 flex items-center justify-between">
-          <span className="text-[11px] text-slate-500">
-            Source links verified from HealthHub, CNB, NAMS, NCADA
-          </span>
+        <div className="px-5 py-3 bg-slate-950 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-3 text-center sm:text-left">
+            <span className="text-[11px] text-slate-500">
+              Source links verified from HealthHub, CNB, NAMS, NCADA
+            </span>
+            <span className="text-[11px] font-semibold text-[#2dd4bf] flex items-center gap-1">
+              • Art generated with Gemini.
+            </span>
+          </div>
           <button
             id="btn-close-facts-help-footer"
             onClick={onClose}

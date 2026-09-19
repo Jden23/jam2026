@@ -6,7 +6,7 @@
  */
 
 import React, { useState, useEffect } from 'react';
-import { LevelConfig, LEVELS_DATA, APP_INFO } from './content';
+import { LevelConfig, LEVELS_DATA, APP_INFO, IMAGES } from './content';
 import { GameProgress, GameSettings } from './types';
 import { ChaptersView } from './components/ChaptersView';
 import { LevelMap } from './components/LevelMap';
@@ -110,12 +110,17 @@ export default function App() {
             onClick={handleLogoClick}
             className="flex items-center gap-2.5 cursor-pointer group"
           >
-            {/* Cute code-rendered Rin mini icon */}
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 to-sky-500 border border-sky-300/40 p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-              <div className="w-5 h-5 rounded-lg bg-orange-200 relative flex items-center justify-center">
-                <div className="w-1 h-1 bg-slate-900 rounded-full mr-1" />
-                <div className="w-1 h-1 bg-slate-900 rounded-full" />
-              </div>
+            {/* Anime Maya portrait avatar with teal glow */}
+            <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-[#2dd4bf] shadow-[0_0_12px_rgba(45,212,191,0.4)] group-hover:scale-105 transition-transform bg-slate-900 shrink-0">
+              <img
+                src={IMAGES.MAYA}
+                alt="Maya"
+                className="w-full h-full object-cover object-top"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.style.display = 'none';
+                }}
+              />
             </div>
 
             <div>
@@ -123,8 +128,8 @@ export default function App() {
                 <span className="font-['Fredoka',sans-serif] text-lg font-black text-white tracking-tight">
                   {APP_INFO.title}
                 </span>
-                <span className="text-[10px] font-black uppercase text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded-full border border-amber-500/30">
-                  SG Teens
+                <span className="text-[10px] font-black uppercase text-[#2dd4bf] bg-[#2dd4bf]/20 px-2 py-0.5 rounded-full border border-[#2dd4bf]/40">
+                  Anime VN
                 </span>
               </div>
               <span className="text-[11px] text-slate-400 hidden sm:inline">

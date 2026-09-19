@@ -1,6 +1,6 @@
 {
   "name": "Buddy Up",
-  "description": "An action web game for Singapore teens featuring Rin in Chapter 1: Standing Your Ground, with smooth combat, rooftop tutorial, interactive story on peer pressure and vape myths, and safe space chat.",
+  "description": "An anime-styled story and action game for Singapore teens featuring Maya in Chapter 1: Standing Your Ground, with smooth combat, rooftop tutorial, interactive visual novel scenes on peer pressure and vape myths, and safe space chat.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

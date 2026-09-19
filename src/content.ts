@@ -5,6 +5,17 @@
  * Source name and link are included with each fact.
  */
 
+export const IMAGES = {
+  TITLE: "https://raw.githubusercontent.com/Jden23/nth/main/title.jpg",
+  MAYA: "https://raw.githubusercontent.com/Jden23/nth/main/maya.jpg",
+  JAY: "https://raw.githubusercontent.com/Jden23/nth/main/jay.jpg",
+  TEACHER: "https://raw.githubusercontent.com/Jden23/nth/main/teacher.jpg",
+  BLEACHERS: "https://raw.githubusercontent.com/Jden23/nth/main/bleachers.jpg",
+  PARK: "https://raw.githubusercontent.com/Jden23/nth/main/park.jpg",
+  ARENA: "https://raw.githubusercontent.com/Jden23/nth/main/arena.jpg",
+  KITCHEN: "https://raw.githubusercontent.com/Jden23/nth/main/kitchen.jpg",
+};
+
 export interface MythFactItem {
   id: number;
   myth: string;
@@ -29,7 +40,7 @@ export interface HelpContactItem {
 
 export interface DialogueLine {
   speaker: string;
-  avatar: 'rin' | 'jay' | 'narrator';
+  avatar: 'maya' | 'jay' | 'teacher' | 'narrator';
   text: string;
   mood?: 'neutral' | 'worried' | 'happy' | 'determined' | 'calm';
   source?: string;
@@ -56,16 +67,16 @@ export interface LevelConfig {
 
 export const APP_INFO = {
   title: "Buddy Up",
-  tagline: "Chapter 1: Standing Your Ground",
+  tagline: "Small choices. Real friends. Your story.",
   audience: "Singapore Teens (Ages 13–18)",
-  characterName: "Rin",
-  characterDescription: "A round, blocky student wearing their school uniform and backpack.",
+  characterName: "Maya",
+  characterDescription: "A determined student standing firm in her values and supporting her friends.",
   companionName: "Jay",
 };
 
 export const CONTROLS_TEXT = {
   keyboard: {
-    move: "WASD / Arrow Keys to move Rin",
+    move: "WASD / Arrow Keys to move Maya",
     aim: "Move mouse cursor to aim focus blast",
     shoot: "Left Click to shoot focus orbs",
     dash: "Spacebar to dash (1.0s cooldown)",
@@ -218,9 +229,9 @@ export const LEVELS_DATA: LevelConfig[] = [
     targetCount: 3,
     estimatedTime: "30s",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "Quiet up here on the rooftop. Good place to clear my head.", mood: "neutral" },
-      { speaker: "Jay", avatar: "jay", text: "Hey Rin! Good to catch you here. Let's do a quick physical warm-up before heading down.", mood: "happy" },
-      { speaker: "Rin", avatar: "rin", text: "Let's do it. Stretch my legs and test out my focus shots.", mood: "determined" },
+      { speaker: "Maya", avatar: "maya", text: "Quiet up here on the rooftop. Good place to clear my head.", mood: "neutral" },
+      { speaker: "Jay", avatar: "jay", text: "Hey Maya! Good to catch you here. Let's do a quick physical warm-up before heading down.", mood: "happy" },
+      { speaker: "Maya", avatar: "maya", text: "Let's do it. Stretch my legs and test out my focus shots.", mood: "determined" },
     ],
   },
   {
@@ -231,22 +242,22 @@ export const LEVELS_DATA: LevelConfig[] = [
     type: "Story",
     icon: "book-open",
     badge: "Level 2 • Story",
-    summary: "Jay tells Rin about being offered a vape after school, and the pressure to fit in.",
+    summary: "Jay tells Maya about being offered a vape after school, and the pressure to fit in.",
     estimatedTime: "2 mins",
     dialogue: [
-      { speaker: "Jay", avatar: "jay", text: "Hey Rin... something weird happened yesterday near the stairwell.", mood: "worried" },
-      { speaker: "Rin", avatar: "rin", text: "What happened? You looked distracted all morning.", mood: "neutral" },
+      { speaker: "Jay", avatar: "jay", text: "Hey Maya... something weird happened yesterday near the stairwell.", mood: "worried" },
+      { speaker: "Maya", avatar: "maya", text: "What happened? You looked distracted all morning.", mood: "neutral" },
       { speaker: "Jay", avatar: "jay", text: "A couple of seniors had one of those fruit-flavoured vape pods. They passed it to me and said 'try lah, it's just harmless flavour and water vapour'.", mood: "worried" },
       {
-        speaker: "Rin",
-        avatar: "rin",
+        speaker: "Maya",
+        avatar: "maya",
         text: "That myth again. Vape liquids contain harmful chemicals, including nicotine, formaldehyde, benzene and metals.",
         mood: "determined",
         source: "HealthHub",
         sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
       },
       { speaker: "Jay", avatar: "jay", text: "I know... but when everyone is standing in a circle staring at you, it felt so awkward to say no. Like you're being uncool.", mood: "worried" },
-      { speaker: "Rin", avatar: "rin", text: "It's never uncool to protect your lungs and health, Jay. Let's stand our ground together.", mood: "determined" },
+      { speaker: "Maya", avatar: "maya", text: "It's never uncool to protect your lungs and health, Jay. Let's stand our ground together.", mood: "determined" },
     ],
   },
   {
@@ -261,8 +272,8 @@ export const LEVELS_DATA: LevelConfig[] = [
     targetCount: 8,
     estimatedTime: "1 min",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "Look at the walkway—thick clouds of lingering vapour and pressure motes!", mood: "worried" },
-      { speaker: "Jay", avatar: "jay", text: "Don't let them box you in, Rin! Dash through the clouds and clear the air!", mood: "determined" },
+      { speaker: "Maya", avatar: "maya", text: "Look at the walkway—thick clouds of lingering vapour and pressure motes!", mood: "worried" },
+      { speaker: "Jay", avatar: "jay", text: "Don't let them box you in, Maya! Dash through the clouds and clear the air!", mood: "determined" },
     ],
   },
   {
@@ -273,15 +284,15 @@ export const LEVELS_DATA: LevelConfig[] = [
     type: "Story",
     icon: "book-open",
     badge: "Level 4 • Story",
-    summary: "Rin and Jay talk through practical ways to say no without feeling awkward.",
+    summary: "Maya and Jay talk through practical ways to say no without feeling awkward.",
     estimatedTime: "2 mins",
     dialogue: [
       { speaker: "Jay", avatar: "jay", text: "Walking out here in the fresh air feels so much better than being stuck in that haze.", mood: "calm" },
-      { speaker: "Rin", avatar: "rin", text: "I was thinking about what happened. If someone offers again, what are you going to say?", mood: "neutral" },
+      { speaker: "Maya", avatar: "maya", text: "I was thinking about what happened. If someone offers again, what are you going to say?", mood: "neutral" },
       { speaker: "Jay", avatar: "jay", text: "I think keeping it simple works best. Just: 'No thanks, not my thing', or 'I'm good, I like my lungs for sports'.", mood: "happy" },
-      { speaker: "Rin", avatar: "rin", text: "Exactly. You don't need a huge speech. If they are real friends, they will respect a simple 'no' without pushing.", mood: "determined" },
+      { speaker: "Maya", avatar: "maya", text: "Exactly. You don't need a huge speech. If they are real friends, they will respect a simple 'no' without pushing.", mood: "determined" },
       { speaker: "Jay", avatar: "jay", text: "Yeah. If they keep pushing, they care more about their own habit than about you.", mood: "calm" },
-      { speaker: "Rin", avatar: "rin", text: "Spot on. Having each other's backs makes it a lot easier to stay true to yourself.", mood: "happy" },
+      { speaker: "Maya", avatar: "maya", text: "Spot on. Having each other's backs makes it a lot easier to stay true to yourself.", mood: "happy" },
     ],
   },
   {
@@ -296,7 +307,7 @@ export const LEVELS_DATA: LevelConfig[] = [
     targetCount: 1,
     estimatedTime: "1.5 mins",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "That massive shadow looming in the courtyard... it's the cloud of peer pressure!", mood: "worried" },
+      { speaker: "Maya", avatar: "maya", text: "That massive shadow looming in the courtyard... it's the cloud of peer pressure!", mood: "worried" },
       { speaker: "Jay", avatar: "jay", text: "Keep your distance and watch out for the expanding smoke rings! Dash right through them when they expand!", mood: "determined" },
     ],
   },
@@ -311,7 +322,7 @@ export const LEVELS_DATA: LevelConfig[] = [
     summary: "An open, non-judgmental space to talk through peer pressure situations, practice saying no, and discuss myths about vapes or drugs.",
     estimatedTime: "Interactive",
     dialogue: [
-      { speaker: "Rin", avatar: "rin", text: "Sometimes it's helpful to talk things through and practice what to say when put on the spot.", mood: "neutral" },
+      { speaker: "Maya", avatar: "maya", text: "Sometimes it's helpful to talk things through and practice what to say when put on the spot.", mood: "neutral" },
     ],
   },
   {
@@ -322,7 +333,7 @@ export const LEVELS_DATA: LevelConfig[] = [
     type: "Ending",
     icon: "trophy",
     badge: "Level 7 • Ending",
-    summary: "Rin and Jay stand confident, knowing that real strength is choosing what is right for yourself.",
+    summary: "Maya and Jay stand confident, knowing that real strength is choosing what is right for yourself.",
     estimatedTime: "Complete",
     endingSummary: {
       headline: "You Completed Chapter 1: Standing Your Ground!",

@@ -68,7 +68,7 @@ export const EndingView: React.FC<EndingViewProps> = ({
         </h1>
 
         <p className="text-sm text-slate-300 max-w-lg mx-auto mb-6 leading-relaxed">
-          Rin and Jay walked out into the open courtyard with clarity and confidence. True friendship means supporting one another in making healthy choices and standing up against peer pressure.
+          Maya and Jay walked out into the open courtyard with clarity and confidence. True friendship means supporting one another in making healthy choices and standing up against peer pressure.
         </p>
 
         {/* Essential Takeaways List */}

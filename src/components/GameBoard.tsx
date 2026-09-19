@@ -17,7 +17,7 @@ import {
   GameSettings,
 } from '../types';
 import {
-  drawRin,
+  drawMaya,
   drawPracticeTarget,
   drawEnemy,
   drawProjectile,
@@ -911,7 +911,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
       enemiesRef.current.forEach((en) => drawEnemy(ctx, en, timeSec));
       projectilesRef.current.forEach((pr) => drawProjectile(ctx, pr));
       drawParticles(ctx, particlesRef.current);
-      drawRin(ctx, playerRef.current, timeSec);
+      drawMaya(ctx, playerRef.current, timeSec);
       drawFloatingTexts(ctx, floatingTextsRef.current);
 
       ctx.restore();
@@ -1152,7 +1152,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
               </div>
 
               <h2 className="text-2xl font-black text-white mb-1 font-['Fredoka',sans-serif]">
-                Take a Breather, Rin!
+                Take a Breather, Maya!
               </h2>
               <p className="text-sm text-slate-300 mb-4">
                 Health reached 0, but losing a fight is just practice—it <strong>never</strong> alters your story progress.

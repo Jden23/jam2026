@@ -2,7 +2,7 @@
  * canvasRenderer.ts
  * Pure code rendering for Buddy Up.
  * No external images or copyrighted assets.
- * Renders cute, rounded, colourful characters (Rin, Practice Targets, Doubt Sprites, Boss),
+ * Renders cute, rounded, colourful characters (Maya, Practice Targets, Doubt Sprites, Boss),
  * projectiles, particle effects, telegraphs, and Singapore school rooftop/interior backdrops.
  */
 
@@ -26,9 +26,9 @@ export function drawRoundRect(
 }
 
 /**
- * Draw Rin: round blocky student with school uniform, backpack, blinking gaze, and dash trail.
+ * Draw Maya: student hero with school uniform, backpack, blinking gaze, and dash trail.
  */
-export function drawRin(
+export function drawMaya(
   ctx: CanvasRenderingContext2D,
   player: PlayerState,
   time: number
@@ -245,6 +245,9 @@ export function drawRin(
   // 6. Overhead Dash Cooldown Ring
   drawDashIndicator(ctx, player.x, player.y - 58, player.dashCooldownTimer, player.dashCooldownMax);
 }
+
+// Backwards compatibility alias
+export const drawRin = drawMaya;
 
 /**
  * Draws health bar AND exact numeric readout.
