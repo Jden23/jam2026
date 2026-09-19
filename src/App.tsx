@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import { LevelConfig, LEVELS_DATA, APP_INFO } from './content';
 import { GameProgress, GameSettings } from './types';
+import { ChaptersView } from './components/ChaptersView';
 import { LevelMap } from './components/LevelMap';
 import { GameBoard } from './components/GameBoard';
 import { StoryView } from './components/StoryView';
@@ -15,7 +16,7 @@ import { AIChatView } from './components/AIChatView';
 import { EndingView } from './components/EndingView';
 import { HelplinesModal } from './components/HelplinesModal';
 import { sound } from './audio';
-import { Sparkles, Heart, Volume2, VolumeX, Shield, Map as MapIcon } from 'lucide-react';
+import { Sparkles, Heart, Volume2, VolumeX, Shield } from 'lucide-react';
 
 export default function App() {
   // Game progression state
@@ -51,7 +52,10 @@ export default function App() {
     showTouchControls: false,
   });
 
-  // Currently playing level (null = on Level Map)
+  // Current view when not in level: 'chapters' (home screen) or 'level_map'
+  const [currentView, setCurrentView] = useState<'chapters' | 'level_map'>('chapters');
+
+  // Currently playing level (null = on Chapters or Level Map)
   const [activeLevel, setActiveLevel] = useState<LevelConfig | null>(null);
 
   // Helplines modal
@@ -88,16 +92,22 @@ export default function App() {
       discoveredCards: ['card-pomodoro'],
     });
     setActiveLevel(null);
+    setCurrentView('chapters');
+  };
+
+  const handleLogoClick = () => {
+    setActiveLevel(null);
+    setCurrentView('chapters');
   };
 
   return (
     <div className="min-h-screen bg-[#0c0f1d] text-slate-100 flex flex-col font-['Nunito',sans-serif]">
-      {/* Top Main Navigation Bar */}
+      {/* Top Main Navigation Bar (Clean & Uncluttered: Logo, Sound, Facts & Help) */}
       <header className="w-full bg-slate-950/90 border-b border-slate-800/80 backdrop-blur-md sticky top-0 z-40 px-4 py-2.5">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           {/* Logo & Title */}
           <div
-            onClick={() => setActiveLevel(null)}
+            onClick={handleLogoClick}
             className="flex items-center gap-2.5 cursor-pointer group"
           >
             {/* Cute code-rendered Rin mini icon */}
@@ -123,20 +133,8 @@ export default function App() {
             </div>
           </div>
 
-          {/* Top Actions */}
+          {/* Top Actions: ONLY Sound button and Facts & Help */}
           <div className="flex items-center gap-2 sm:gap-3">
-            {/* Map shortcut button if currently in a level */}
-            {activeLevel && (
-              <button
-                id="btn-header-map"
-                onClick={() => setActiveLevel(null)}
-                className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white rounded-xl text-xs font-bold transition-colors cursor-pointer"
-              >
-                <MapIcon className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Level Map</span>
-              </button>
-            )}
-
             {/* Sound Toggle */}
             <button
               id="btn-header-sound"
@@ -166,11 +164,22 @@ export default function App() {
 
       {/* Main Content Stage */}
       <main className="flex-1 w-full max-w-5xl mx-auto py-4 px-2 sm:px-4 flex flex-col justify-center">
-        {activeLevel === null && (
+        {/* Chapters Home Screen */}
+        {activeLevel === null && currentView === 'chapters' && (
+          <ChaptersView
+            progress={progress}
+            onSelectChapter1={() => setCurrentView('level_map')}
+            onOpenFactsHelp={() => setShowHelplines(true)}
+          />
+        )}
+
+        {/* Level Map for Chapter 1 */}
+        {activeLevel === null && currentView === 'level_map' && (
           <LevelMap
             progress={progress}
             onSelectLevel={(lvl) => setActiveLevel(lvl)}
             onOpenHelplines={() => setShowHelplines(true)}
+            onBackToChapters={() => setCurrentView('chapters')}
           />
         )}
 

@@ -9,18 +9,20 @@
 import React from 'react';
 import { LEVELS_DATA, LevelConfig } from '../content';
 import { GameProgress } from '../types';
-import { Swords, BookOpen, MessageCircle, Trophy, Check, Lock, Play, Sparkles } from 'lucide-react';
+import { Swords, BookOpen, MessageCircle, Trophy, Check, Lock, Play, Sparkles, ArrowLeft } from 'lucide-react';
 
 interface LevelMapProps {
   progress: GameProgress;
   onSelectLevel: (level: LevelConfig) => void;
   onOpenHelplines: () => void;
+  onBackToChapters: () => void;
 }
 
 export const LevelMap: React.FC<LevelMapProps> = ({
   progress,
   onSelectLevel,
   onOpenHelplines,
+  onBackToChapters,
 }) => {
   const getIcon = (type: LevelConfig['type']) => {
     switch (type) {
@@ -50,6 +52,18 @@ export const LevelMap: React.FC<LevelMapProps> = ({
 
   return (
     <div className="w-full max-w-4xl mx-auto py-4 px-3 flex flex-col items-center select-none">
+      {/* Top Navigation Row */}
+      <div className="w-full flex items-center justify-start mb-4">
+        <button
+          id="btn-back-to-chapters"
+          onClick={onBackToChapters}
+          className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-slate-900/90 hover:bg-slate-800 text-slate-300 hover:text-white border border-slate-700/70 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-sm cursor-pointer"
+        >
+          <ArrowLeft className="w-4 h-4 text-sky-400" />
+          <span>Back to Chapters</span>
+        </button>
+      </div>
+
       {/* Chapter Title Header */}
       <div className="text-center mb-8">
         <div className="inline-flex items-center gap-2 px-3 py-1 bg-sky-950/60 border border-sky-500/40 rounded-full text-xs font-bold text-sky-300 mb-2">
