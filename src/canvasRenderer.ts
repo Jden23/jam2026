@@ -430,6 +430,46 @@ export function drawPracticeTarget(
 
   // Target HP bar + numeric indicator
   drawOverheadHp(ctx, target.x, target.y - target.radius - 26, target.hp, target.maxHp, 42, 6);
+
+  // Myth bubble above target
+  if (target.mythItem) {
+    drawMythBubble(ctx, target.x, target.y - target.radius - 32, target.mythItem.myth);
+  }
+}
+
+/**
+ * Draws a cute speech bubble above an entity displaying its Myth
+ */
+function drawMythBubble(ctx: CanvasRenderingContext2D, x: number, y: number, mythText: string) {
+  ctx.save();
+  ctx.font = 'bold 9px Nunito, sans-serif';
+  const text = mythText.length > 26 ? mythText.slice(0, 24) + '…' : mythText;
+  const metrics = ctx.measureText(text);
+  const pillW = Math.max(metrics.width + 16, 60);
+  const pillH = 16;
+  const pillX = x - pillW / 2;
+  const pillY = y - pillH;
+
+  // Bubble background
+  ctx.fillStyle = 'rgba(15, 23, 42, 0.95)';
+  ctx.strokeStyle = '#f43f5e';
+  ctx.lineWidth = 1.5;
+  drawRoundRect(ctx, pillX, pillY, pillW, pillH, 8, true, true);
+
+  // Pointer arrow
+  ctx.fillStyle = '#f43f5e';
+  ctx.beginPath();
+  ctx.moveTo(x - 3, pillY + pillH);
+  ctx.lineTo(x + 3, pillY + pillH);
+  ctx.lineTo(x, pillY + pillH + 3);
+  ctx.fill();
+
+  // Text
+  ctx.fillStyle = '#fecdd3';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(text, x, pillY + pillH / 2);
+  ctx.restore();
 }
 
 /**
@@ -638,6 +678,11 @@ export function drawEnemy(
 
   // Overhead HP bar + numeric indicator
   drawOverheadHp(ctx, enemy.x, enemy.y - enemy.radius - 14, enemy.hp, enemy.maxHp, enemy.type === 'burnout-boss' ? 70 : 36, enemy.type === 'burnout-boss' ? 8 : 5);
+
+  // Myth bubble above enemy
+  if (enemy.mythItem) {
+    drawMythBubble(ctx, enemy.x, enemy.y - enemy.radius - (enemy.type === 'burnout-boss' ? 24 : 18), enemy.mythItem.myth);
+  }
 }
 
 /**

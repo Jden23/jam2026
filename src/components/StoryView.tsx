@@ -7,7 +7,7 @@
 
 import React, { useState } from 'react';
 import { LevelConfig, DialogueLine } from '../content';
-import { ArrowLeft, Play, Sparkles, User } from 'lucide-react';
+import { ArrowLeft, Play, Sparkles, User, ExternalLink } from 'lucide-react';
 import { sound } from '../audio';
 
 interface StoryViewProps {
@@ -162,6 +162,22 @@ export const StoryView: React.FC<StoryViewProps> = ({
           <p className="text-sm sm:text-base text-slate-100 font-medium leading-relaxed min-h-[54px]">
             "{currentLine.text}"
           </p>
+
+          {currentLine.source && (
+            <div className="mt-2 text-xs text-slate-400 flex items-center gap-1.5">
+              <span>Source:</span>
+              <a
+                href={currentLine.sourceUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="text-sky-400 underline hover:text-sky-300 inline-flex items-center gap-1 font-semibold"
+              >
+                <span>{currentLine.source}</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+            </div>
+          )}
 
           <div className="flex justify-end mt-3">
             <button

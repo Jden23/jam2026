@@ -184,11 +184,18 @@ export const LevelMap: React.FC<LevelMapProps> = ({
       {/* Footer Banner */}
       <div className="w-full max-w-xl mt-6 p-4 rounded-2xl bg-gradient-to-r from-slate-900 via-indigo-950/40 to-slate-900 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
         <div>
-          <h2 className="text-sm font-black text-white">Need someone to talk to about peer pressure?</h2>
+          <h2 className="text-sm font-black text-white">Need someone to talk to or want verified facts?</h2>
           <p className="text-xs text-slate-400">
-            Remember that true friends will always respect your choices and boundaries.
+            Check out verified vape myths, facts, and confidential help contacts.
           </p>
         </div>
+        <button
+          id="btn-open-facts-help-map"
+          onClick={onOpenHelplines}
+          className="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/30 rounded-xl text-xs font-bold transition-colors cursor-pointer shrink-0"
+        >
+          Facts & Help
+        </button>
       </div>
     </div>
   );

@@ -26,8 +26,8 @@ import {
   drawBackground,
 } from '../canvasRenderer';
 import { sound } from '../audio';
-import { CONTROLS_TEXT, QUICK_TIPS, LevelConfig } from '../content';
-import { RotateCcw, ArrowLeft, Volume2, VolumeX, Shield, Heart, Zap, Play, CheckCircle2 } from 'lucide-react';
+import { CONTROLS_TEXT, QUICK_TIPS, LevelConfig, MYTHS_AND_FACTS, MythFactItem } from '../content';
+import { RotateCcw, ArrowLeft, Volume2, VolumeX, Shield, Heart, Zap, Play, CheckCircle2, ExternalLink, X, Sparkles } from 'lucide-react';
 
 interface GameBoardProps {
   level: LevelConfig;
@@ -88,6 +88,16 @@ export const GameBoard: React.FC<GameBoardProps> = ({
   const [isGameOver, setIsGameOver] = useState<boolean>(false);
   const [isVictory, setIsVictory] = useState<boolean>(false);
   const [currentTip, setCurrentTip] = useState<string>('');
+  const [bustedFact, setBustedFact] = useState<MythFactItem | null>(null);
+
+  // Auto-dismiss busted fact notification after 7 seconds
+  useEffect(() => {
+    if (!bustedFact) return;
+    const timer = setTimeout(() => {
+      setBustedFact(null);
+    }, 7000);
+    return () => clearTimeout(timer);
+  }, [bustedFact]);
 
   // Player state
   const playerRef = useRef<PlayerState>({
@@ -168,7 +178,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
     setHudDashTimer(0);
 
     if (level.id === 1) {
-      // Level 1: Rooftop practice - 3 Practice Targets
+      // Level 1: Rooftop practice - 3 Practice Targets with Myths
       practiceTargetsRef.current = [
         {
           id: 'target-1',
@@ -184,6 +194,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           wobbleAngle: 0,
           wobbleSpeed: 4,
           isDead: false,
+          mythItem: MYTHS_AND_FACTS[0],
         },
         {
           id: 'target-2',
@@ -199,6 +210,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           wobbleAngle: 1.5,
           wobbleSpeed: 5,
           isDead: false,
+          mythItem: MYTHS_AND_FACTS[1],
         },
         {
           id: 'target-3',
@@ -214,12 +226,13 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           wobbleAngle: 3,
           wobbleSpeed: 4.5,
           isDead: false,
+          mythItem: MYTHS_AND_FACTS[2],
         },
       ];
       enemiesRef.current = [];
       setTargetsRemaining(3);
     } else if (level.id === 3) {
-      // Level 3: Vapour Mist Sprites
+      // Level 3: Vapour Mist Sprites with Myths
       practiceTargetsRef.current = [];
       enemiesRef.current = [];
       for (let i = 0; i < 8; i++) {
@@ -240,11 +253,12 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           hitFlash: 0,
           wobblePhase: Math.random() * Math.PI * 2,
           stateTimer: 0,
+          mythItem: MYTHS_AND_FACTS[i % MYTHS_AND_FACTS.length],
         });
       }
       setTargetsRemaining(8);
     } else if (level.id === 5) {
-      // Level 5: Courtyard Showdown (Boss: Pressure Golem)
+      // Level 5: Courtyard Showdown (Boss: Pressure Golem with Myth)
       practiceTargetsRef.current = [];
       enemiesRef.current = [
         {
@@ -264,6 +278,7 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           hitFlash: 0,
           wobblePhase: 0,
           stateTimer: 0,
+          mythItem: MYTHS_AND_FACTS[6], // Cannabis / Drug myth or major myth
           attackTelegraph: {
             x: 400,
             y: 200,
@@ -720,6 +735,10 @@ export const GameBoard: React.FC<GameBoardProps> = ({
                     target.isDead = true;
                     sound.playTargetDestroyed();
 
+                    if (target.mythItem) {
+                      setBustedFact(target.mythItem);
+                    }
+
                     // Star confetti explosion on target destruction
                     for (let i = 0; i < 20; i++) {
                       const angle = Math.random() * Math.PI * 2;
@@ -768,6 +787,11 @@ export const GameBoard: React.FC<GameBoardProps> = ({
 
                   if (en.hp <= 0) {
                     sound.playTargetDestroyed();
+
+                    if (en.mythItem) {
+                      setBustedFact(en.mythItem);
+                    }
+
                     for (let i = 0; i < 15; i++) {
                       const angle = Math.random() * Math.PI * 2;
                       particlesRef.current.push({
@@ -1014,6 +1038,59 @@ export const GameBoard: React.FC<GameBoardProps> = ({
           {level.id === 1 ? 'Practice Targets Remaining:' : 'Enemies Remaining:'}{' '}
           <span className="text-sky-400 font-extrabold text-sm ml-1">{targetsRemaining}</span>
         </div>
+
+        {/* MYTH BUSTED NOTIFICATION (Shown when a bubble is destroyed) */}
+        {bustedFact && !isGameOver && (
+          <div className="absolute top-12 left-1/2 -translate-x-1/2 w-[92%] max-w-lg z-25 animate-in fade-in slide-in-from-top-3 duration-200">
+            <div className="bg-slate-950/95 border-2 border-emerald-500/80 rounded-2xl p-3.5 shadow-2xl backdrop-blur-md">
+              <div className="flex items-center justify-between mb-1.5">
+                <span className="text-xs font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>Myth Busted!</span>
+                </span>
+                <button
+                  id="btn-dismiss-myth-fact"
+                  onClick={() => setBustedFact(null)}
+                  className="text-slate-400 hover:text-white p-1 rounded-lg cursor-pointer"
+                  aria-label="Dismiss fact notification"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
+
+              <div className="mb-1">
+                <span className="text-[10px] font-black uppercase text-rose-400 bg-rose-950/70 px-1.5 py-0.5 rounded border border-rose-500/30 mr-1.5">
+                  Myth
+                </span>
+                <span className="text-xs text-rose-200 font-semibold">
+                  "{bustedFact.myth}"
+                </span>
+              </div>
+
+              <div className="mb-2 pl-2 border-l-2 border-emerald-500">
+                <span className="text-[10px] font-black uppercase text-emerald-400 bg-emerald-950/70 px-1.5 py-0.5 rounded border border-emerald-500/30 mr-1.5">
+                  Fact
+                </span>
+                <span className="text-xs sm:text-sm text-emerald-100 font-bold">
+                  "{bustedFact.fact}"
+                </span>
+              </div>
+
+              <div className="flex items-center gap-1 text-[11px] text-slate-400 pt-1.5 border-t border-slate-800">
+                <span>Source:</span>
+                <a
+                  href={bustedFact.sourceUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sky-400 underline hover:text-sky-300 inline-flex items-center gap-1 font-semibold"
+                >
+                  <span>{bustedFact.source}</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ON-SCREEN TOUCH CONTROLS (Auto-show on touch devices or toggled on) */}
         {touchActive && !isGameOver && !isVictory && (

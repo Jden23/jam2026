@@ -1,3 +1,5 @@
+import { MythFactItem } from './content';
+
 export type LevelType = 'Fight' | 'Story' | 'AI Chat' | 'Ending';
 
 export interface GameSettings {
@@ -40,6 +42,7 @@ export interface PracticeTarget {
   wobbleAngle: number;
   wobbleSpeed: number;
   isDead: boolean;
+  mythItem?: MythFactItem;
 }
 
 export interface EnemyEntity {
@@ -59,6 +62,7 @@ export interface EnemyEntity {
   hitFlash: number;
   wobblePhase: number;
   stateTimer: number;
+  mythItem?: MythFactItem;
   attackTelegraph?: {
     x: number;
     y: number;

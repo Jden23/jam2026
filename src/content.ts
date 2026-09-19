@@ -1,15 +1,39 @@
 /**
  * content.ts
  * Centralized game text, story scripts, level configurations, and combat tips.
- * Theme: Drug prevention for teens (vapes, peer pressure, myths).
- * NOTE: As instructed, no unverified facts, statistics, or phone numbers are added.
+ * Contains ONLY verified drug prevention myths, facts, and help contacts as requested.
+ * Source name and link are included with each fact.
  */
+
+export interface MythFactItem {
+  id: number;
+  myth: string;
+  fact: string;
+  source: string;
+  sourceUrl: string;
+}
+
+export interface SingaporeFactItem {
+  fact: string;
+  source: string;
+  sourceUrl: string;
+}
+
+export interface HelpContactItem {
+  name: string;
+  details: string;
+  phone: string;
+  source: string;
+  sourceUrl: string;
+}
 
 export interface DialogueLine {
   speaker: string;
   avatar: 'rin' | 'jay' | 'narrator';
   text: string;
   mood?: 'neutral' | 'worried' | 'happy' | 'determined' | 'calm';
+  source?: string;
+  sourceUrl?: string;
 }
 
 export interface LevelConfig {
@@ -60,7 +84,7 @@ export const CONTROLS_TEXT = {
 };
 
 /**
- * Combat-only tips (all study tips removed as instructed)
+ * Combat-only tips
  */
 export const QUICK_TIPS = [
   "Keep moving! Strafing in gentle circles makes it much easier to dodge incoming projectiles.",
@@ -69,6 +93,112 @@ export const QUICK_TIPS = [
   "Losing a fight is just practice! In Buddy Up, defeat never changes your story progress.",
   "Stay at mid-range to give yourself plenty of time to react to incoming attacks.",
   "When swarmed, focus on clearing the closest enemies first to create breathing room.",
+];
+
+/**
+ * Verified Myths (for enemy bubbles) and Facts (shown when destroyed)
+ * Source name and link provided for each.
+ */
+export const MYTHS_AND_FACTS: MythFactItem[] = [
+  {
+    id: 1,
+    myth: "It's just flavoured water.",
+    fact: "Vape liquids contain harmful chemicals, including nicotine, formaldehyde, benzene and metals.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 2,
+    myth: "Vapes are safer than cigarettes.",
+    fact: "WHO says vapes are harmful and not safer than cigarettes.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 3,
+    myth: "I'm young, I'll recover.",
+    fact: "Nicotine affects the developing brain: attention, learning, mood and impulse control.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 4,
+    myth: "It's just one pod.",
+    fact: "One vape pod can contain as much nicotine as 3–4 packs of cigarettes.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 5,
+    myth: "I can stop anytime.",
+    fact: "Nicotine is addictive. Stopping can cause cravings and withdrawal.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 6,
+    myth: "It's legal if I vape at home.",
+    fact: "Vaping is illegal in Singapore, in public and in private.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    id: 7,
+    myth: "Cannabis is natural, so it's safe.",
+    fact: "Cannabis is harmful and addictive, can damage the brain, and is linked to serious mental health issues.",
+    source: "CNB",
+    sourceUrl: "https://www.cnb.gov.sg/educational-resources/myths-and-facts-about-drugs/cannabis/harms-of-cannabis-use",
+  },
+  {
+    id: 8,
+    myth: "Asking for help gets you in trouble.",
+    fact: "Quitline offers confidential tele-counselling for people who want to quit vaping.",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+];
+
+/**
+ * Verified Singapore Fact with source name and link
+ */
+export const SINGAPORE_FACT: SingaporeFactItem = {
+  fact: "In 2025, 50% of new drug abusers arrested in Singapore were under 30.",
+  source: "CNB",
+  sourceUrl: "https://www.cnb.gov.sg/mediaroom/news/cnb-annual-statistics-2025/",
+};
+
+/**
+ * Verified Help Contacts with source name and link
+ */
+export const HELP_CONTACTS: HelpContactItem[] = [
+  {
+    name: "Quitline",
+    details: "quit vaping, confidential",
+    phone: "1800 438 2000",
+    source: "HealthHub",
+    sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+  },
+  {
+    name: "National Mindline",
+    details: "24/7",
+    phone: "1771",
+    source: "NAMS",
+    sourceUrl: "https://www.nams.sg/contact-us/Pages/default.aspx",
+  },
+  {
+    name: "NAMS All Addictions Helpline",
+    details: "Helpline",
+    phone: "6-7326837",
+    source: "NAMS",
+    sourceUrl: "https://www.nams.sg/contact-us/Pages/default.aspx",
+  },
+  {
+    name: "TOUCHline",
+    details: "youth",
+    phone: "1800-3772-252",
+    source: "NCADA",
+    sourceUrl: "https://www.ncada.org.sg/seeking-help/",
+  },
 ];
 
 /**
@@ -107,7 +237,14 @@ export const LEVELS_DATA: LevelConfig[] = [
       { speaker: "Jay", avatar: "jay", text: "Hey Rin... something weird happened yesterday near the stairwell.", mood: "worried" },
       { speaker: "Rin", avatar: "rin", text: "What happened? You looked distracted all morning.", mood: "neutral" },
       { speaker: "Jay", avatar: "jay", text: "A couple of seniors had one of those fruit-flavoured vape pods. They passed it to me and said 'try lah, it's just harmless flavour and water vapour'.", mood: "worried" },
-      { speaker: "Rin", avatar: "rin", text: "That myth again. People keep saying it's harmless water vapour, but it's not. It's full of chemicals and nicotine designed to hook you.", mood: "determined" },
+      {
+        speaker: "Rin",
+        avatar: "rin",
+        text: "That myth again. Vape liquids contain harmful chemicals, including nicotine, formaldehyde, benzene and metals.",
+        mood: "determined",
+        source: "HealthHub",
+        sourceUrl: "https://www.healthhub.sg/programmes/iquit/e-cig/vaping-mistruths",
+      },
       { speaker: "Jay", avatar: "jay", text: "I know... but when everyone is standing in a circle staring at you, it felt so awkward to say no. Like you're being uncool.", mood: "worried" },
       { speaker: "Rin", avatar: "rin", text: "It's never uncool to protect your lungs and health, Jay. Let's stand our ground together.", mood: "determined" },
     ],

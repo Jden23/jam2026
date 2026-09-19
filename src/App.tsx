@@ -151,14 +151,14 @@ export default function App() {
               )}
             </button>
 
-            {/* Support and Resource Button */}
+            {/* Facts & Help Button */}
             <button
-              id="btn-open-helplines-header"
+              id="btn-open-facts-help-header"
               onClick={() => setShowHelplines(true)}
               className="flex items-center gap-1.5 px-3.5 py-1.5 bg-rose-950/70 hover:bg-rose-900/80 text-rose-300 border border-rose-500/40 rounded-xl text-xs font-bold transition-all shadow-sm cursor-pointer"
             >
               <Heart className="w-3.5 h-3.5 fill-rose-500" />
-              <span>Support Info</span>
+              <span>Facts & Help</span>
             </button>
           </div>
         </div>
